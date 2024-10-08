@@ -1,0 +1,51 @@
+.valuelogo {
+  transition: all 0.5s;
+  color: var(--dark);
+  transform: scale(1, 1);
+}
+
+.valuecard {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.valuecard:hover .valuelogo {
+  background-color: var(--c3);
+  color: white;
+  transform: scale(1.2, 1.2);
+}
+.secfac,
+.secde {
+  background-image: url(../../assets/blob-scene-haikei.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+  min-height: 250px;
+}
+.secde {
+  background-image: url(../../assets/polygon-scatter-haikei.svg);
+}
+.dep {
+  background-color: white;
+  transition: 0.3s;
+  transform: translateY(0%);
+}
+.dep i {
+  color: var(--primary);
+}
+.dep div h4 {
+  color: var(--primary);
+}
+.dep:hover {
+  background-color: var(--primary);
+  transform: translateY(-7%);
+  color: white;
+}
+.dep:hover i {
+  color: white;
+}
+.dep:hover div h4 {
+  color: white;
+}
+.featuers > div > div {
+  box-shadow: rgba(0, 0, 0, 0.308) 0px 4px 6px;
+  background-color: white;
+}

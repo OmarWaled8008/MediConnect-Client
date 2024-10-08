@@ -1,0 +1,180 @@
+Overall card styling
+
+.card {
+  border: 1px solid #ddd;
+  border-color: var(--primary);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.308) 0px 4px 6px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 1rem;
+}
+
+.nav-tabs .nav-link {
+  color: #555;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: #ddd;
+  color: white;
+}
+
+.nav-tabs .nav-link.active {
+  color: #007bff;
+  border-color: #007bff;
+}
+
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}
+
+
+.card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.rating {
+  color: #ffd700;
+  font-size: 1.5rem;
+}
+
+
+.navbar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+
+.nav-link {
+  color: #274760;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 10px 15px;
+}
+
+
+.nav-link.active {
+  color: #fff;
+  background-color: #317bc4;
+  border-radius: 10px;
+}
+
+
+.nav-link:hover {
+  color: #fff;
+  background-color: #317bc4;
+  border-radius: 10px;
+}
+
+
+.dropdown-menu {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+
+.dropdown-item:hover {
+  background-color: #317bc4;
+  color: #fff;
+}
+
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.doctor-image {
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.nav-tabs .nav-link {
+  color: #007bff;
+}
+
+.doctor-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.2s;
+  height: 600px;
+}
+
+.doctor-card:hover {
+  transform: scale(1.02);
+}
