@@ -1,0 +1,21 @@
+.guides-container {
+    padding: 20px;
+}
+
+.guides-container h1,
+.guides-container p {
+    margin-bottom: 20px;
+}
+
+.guides-container .card {
+    margin-bottom: 20px;
+}
+
+.guides-container .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.guides-container .card-link {
+    font-weight: bold;
+}

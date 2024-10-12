@@ -54,10 +54,10 @@ export default function AppointmentBooking() {
             <div class="col px-2">
               <label for="department">Department</label>
               <select id="department" name="department">
-                <option value="cardiology">Cardiology</option>
+                {/* <option value="cardiology">Cardiology</option>
                 <option value="neurology">Neurology</option>
                 <option value="pediatrics">Pediatrics</option>
-                <option value="orthopedics">Orthopedics</option>
+                <option value="orthopedics">Orthopedics</option> */}
               </select>
             </div>
           </div>

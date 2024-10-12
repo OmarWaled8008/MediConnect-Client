@@ -56,28 +56,28 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/about"
+                    to="/about"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/services"
+                    to="/services"
                   >
                     Services
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/contact"
+                    to="/contactus"
                   >
-                    Contact
-                  </a>
+                    Contact Us
+                  </Link>
                 </li>
                 <li className="mb-2">
                   <Link
@@ -93,142 +93,86 @@ export default function Footer() {
               <h5 className="text-lg font-medium mb-2 text-pr">Resources</h5>
               <ul className="list-unstyled text-sm font-normal">
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/guides"
+                    to="/guides"
                   >
                     Guides
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/faq"
-                  >
-                    FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
                   <Link
                     className="hover:text-pr hover:underline transition"
-                    to="/support"
+                    to="/faqs"
                   >
-                    Support
+                    FAQ
                   </Link>
                 </li>
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/terms"
+                    to="/terms"
                   >
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
-                  <a
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="/privacy"
+                    to="/privacy"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
+
             <div className="col-6 col-lg-3 mb-3">
               <h5 className="text-lg font-medium mb-2 text-pr">Connect</h5>
-              <ul className="list-unstyled text-sm font-normal">
-                <li className="mb-2">
-                  <a
+              <ul className="list-unstyled text-sm font-normal flex space-x-3">
+                <li>
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="https://facebook.com"
+                    to="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook"
                   >
-                    <i className="fab fa-facebook text-p text-xl mr-1"></i>{" "}
-                    Facebook
-                  </a>
+                    <i className="fab fa-facebook text-p text-xl"></i>
+                  </Link>
                 </li>
-                <li className="mb-2">
-                  <a
+                <li>
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="https://twitter.com"
+                    to="https://twitter.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Twitter"
                   >
-                    <i className="fab fa-twitter text-p text-xl mr-1"></i>{" "}
-                    Twitter
-                  </a>
+                    <i className="fab fa-twitter text-p text-xl"></i>
+                  </Link>
                 </li>
-                <li className="mb-2">
-                  <a
+                <li>
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="https://instagram.com"
+                    to="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
                   >
-                    <i className="fab fa-instagram text-p text-xl mr-1"></i>{" "}
-                    Instagram
-                  </a>
+                    <i className="fab fa-instagram text-p text-xl"></i>
+                  </Link>
                 </li>
-                <li className="mb-2">
-                  <a
+                <li>
+                  <Link
                     className="hover:text-pr hover:underline transition"
-                    href="https://linkedin.com"
+                    to="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
                   >
-                    <i className="fab fa-linkedin text-p text-xl mr-1"></i>{" "}
-                    LinkedIn
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="col-6 col-lg-3 mb-3">
-              <h5 className="text-lg font-medium mb-2 text-pr">Community</h5>
-              <ul className="list-unstyled text-sm font-normal">
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/forum"
-                  >
-                    Forum
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/events"
-                  >
-                    Events
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/partners"
-                  >
-                    Partners
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/careers"
-                  >
-                    Careers
-                  </a>
-                </li>
-                <li className="mb-2">
-                  <a
-                    className="hover:text-pr hover:underline transition"
-                    href="/volunteer"
-                  >
-                    Volunteer
-                  </a>
+                    <i className="fab fa-linkedin text-p text-xl"></i>
+                  </Link>
                 </li>
               </ul>
             </div>

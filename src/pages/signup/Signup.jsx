@@ -406,7 +406,7 @@
 // }
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 //import axios from 'axios';
 import hospitalImage from "../../assets/hospital.jpg";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -425,7 +425,7 @@ const Signup = () => {
   const [medications, setMedications] = useState("");
   const [insurance, setInsurance] = useState("");
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const nextStep = () => {
     setStep(step + 1);

@@ -9,6 +9,12 @@ import Support from "./pages/support/Support";
 import HospitalLocator from "./pages/hospitallocator/HospitalLocator";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
+import Contact from "./pages/contact/Contact";
+import Guides from "./pages/guides/Guides";
+import Privacy from "./pages/privacy/Privacy";
+import TermsOfService from "./pages/termsofservice/TermsOfService";
+import Faqs from "./pages/faqs/Faqs";
+import Services from "./pages/servicess/Services";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +27,16 @@ const router = createBrowserRouter([
       { path: "details", element: <HospitalDetails /> },
       { path: "booking", element: <AppointmentBooking /> },
       { path: "support", element: <Support /> },
+      { path: "contactus", element: <Contact /> },
+      { path: "guides", element: <Guides /> },
+      { path: "privacy", element: <Privacy /> },
+      { path: "terms", element: <TermsOfService /> },
+      { path: "faqs", element: <Faqs /> },
+      { path: "services", element: <Services /> },
     ],
   },
-  { path: "login" , element:<Login /> },
-  { path: "signup" , element:<Signup /> },
+  { path: "login", element: <Login /> },
+  { path: "signup", element: <Signup /> },
   { path: "*", element: <Notfound /> },
 ]);
 
