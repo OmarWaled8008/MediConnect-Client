@@ -21,6 +21,7 @@ import FAQ from "./pages/faq/faq";
 import Services from "./pages/servicess/Services.jsx";
 import Guides from "./pages/Guides/Guides.jsx"
 import TermsOfService from "./pages/TermsOfService/TermsOfService.jsx"
+import chatbox from "./components/chatbox/ChatBox.jsx"
 
 const router = createBrowserRouter([{
         path: "/",
@@ -44,6 +45,7 @@ const router = createBrowserRouter([{
             { path: "services", element: < Services / > },
             { path: "guides", element: < Guides / > },
             { path: "terms", element: < TermsOfService / > },
+            { path: "chatbox", element: < chatbox / > }, // Ensure the file is named `ChatBox.jsx`
         ],
     },
     { path: "/login", element: < Login / > },

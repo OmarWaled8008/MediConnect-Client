@@ -1,0 +1,139 @@
+.chatbox {
+    position: relative;
+}
+
+.chat-window {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 400px;
+    max-height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background-color: #007bff;
+    /* Header background color */
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    /* Enable scrolling */
+    background-color: #f9f9f9;
+    /* Chat area background color */
+}
+
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 80%;
+    clear: both;
+    word-wrap: break-word;
+    /* Allow long words to wrap */
+}
+
+.user-message {
+    background-color: #d1e7dd;
+    /* User message background color */
+    align-self: flex-end;
+}
+
+.bot-message {
+    background-color: #f1f1f1;
+    /* Bot message background color */
+    align-self: flex-start;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px;
+}
+
+.sample-questions {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    /* Sample questions background color */
+    max-height: 150px;
+    /* Limit height for scrolling */
+    overflow-y: auto;
+    /* Enable scrolling for sample questions */
+}
+
+.sample-questions h4 {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.sample-question-button {
+    display: block;
+    background-color: #007bff;
+    /* Button background color */
+    color: white;
+    border: none;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sample-question-button:hover {
+    background-color: #0056b3;
+    /* Button hover color */
+}
+
+.send {
+    background-color: #0056b3;
+    color: #ccc;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    float: right;
+    transition: background-color 0.3s ease;
+    /* Button transition */
+    &:hover {
+        background-color: #004284;
+        /* Button hover color */
+    }
+}
+
+.related-questions {
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.related-question-button {
+    display: block;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 3px 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.related-question-button:hover {
+    background-color: #5a6268;
+}
