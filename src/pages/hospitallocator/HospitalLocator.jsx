@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
-import hero1 from "../../assets/home-m4.png";
+import "./hospitallocator.css";
+import hero1 from "../../assets/loc.png";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -8,8 +8,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate, Link } from "react-router-dom";
-import "./hospitallocator.css";
+import { useNavigate, Link } from 'react-router-dom';
 
 const initialHospitals = [
   {
@@ -41,9 +40,8 @@ const initialHospitals = [
     contactInfo: "0226161840 - +20226175241",
     phone: "0226161840",
     email: "contact@doctor.com",
-    description:
-      "A leading medical center providing various healthcare services.",
-    mapLink: "https://www.google.com/maps?q=Doctor+Medical+Center",
+    description: "A leading medical center providing various healthcare services.",
+    mapLink: "https://www.google.com/maps?q=Doctor+Medical+Center"
   },
   {
     id: 3,
@@ -59,7 +57,7 @@ const initialHospitals = [
     phone: "035905175",
     email: "manal.daghar@clinic.com",
     description: "Specializing in psychological health and therapy.",
-    mapLink: "https://www.google.com/maps?q=Psychological+Clinic",
+    mapLink: "https://www.google.com/maps?q=Psychological+Clinic"
   },
   {
     id: 4,
@@ -74,8 +72,8 @@ const initialHospitals = [
     email: "info@alhassan.com", // Placeholder email
     description: "N/A", // Update if more information is available
     mapLink: "https://www.google.com/maps?q=Al-Hassan+Hospital",
-    lat: 49.40526, // Latitude from the provided data
-    lng: 11.147167, // Longitude from the provided data
+    lat: 49.405260, // Latitude from the provided data
+    lng: 11.147167 // Longitude from the provided data
   },
   {
     id: 5, // New ID for the hospital
@@ -91,9 +89,10 @@ const initialHospitals = [
     description: "N/A", // Update if more information is available
     mapLink: "https://www.google.com/maps?q=Glim+Hospital",
     lat: 31.2377734, // Latitude from the provided data
-    lng: 29.9618553, // Longitude from the provided data
-  },
+    lng: 29.9618553 // Longitude from the provided data
+  }
 ];
+
 
 const RoutingMachine = ({ waypoints }) => {
   const map = useMap();
@@ -102,7 +101,7 @@ const RoutingMachine = ({ waypoints }) => {
     const routingControl = L.Routing.control({
       waypoints,
       lineOptions: {
-        styles: [{ color: "red", weight: 4 }],
+        styles: [{ color: 'red', weight: 4 }],
       },
       createMarker: () => null,
       addWaypoints: false,
@@ -117,16 +116,14 @@ const RoutingMachine = ({ waypoints }) => {
 };
 
 const calculateDistance = (lat1, lng1, lat2, lng2) => {
-  const toRad = (x) => (x * Math.PI) / 180;
+  const toRad = x => (x * Math.PI) / 180;
   const R = 6371; // Radius of the Earth in km
   const dLat = toRad(lat2 - lat1);
   const dLng = toRad(lng2 - lng1);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLng / 2) *
-      Math.sin(dLng / 2);
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 };
@@ -136,28 +133,20 @@ export default function HospitalLocator() {
   const [filterLocation, setFilterLocation] = useState("");
   const [filterService, setFilterService] = useState("");
   const [userLocation, setUserLocation] = useState([31.2664943, 30.0136571]);
-  const [activeTabs, setActiveTabs] = useState(
-    Array(hospitals.length).fill("details")
-  );
+  const [activeTabs, setActiveTabs] = useState(Array(hospitals.length).fill('details'));
   const [selectedHospital, setSelectedHospital] = useState(null); // New state for selected hospital
   const navigate = useNavigate();
 
   const sortedHospitals = hospitals
-    .map((hospital) => ({
+    .map(hospital => ({
       ...hospital,
-      distance: calculateDistance(
-        userLocation[0],
-        userLocation[1],
-        hospital.lat,
-        hospital.lng
-      ).toFixed(2),
+      distance: calculateDistance(userLocation[0], userLocation[1], hospital.lat, hospital.lng).toFixed(2)
     }))
     .sort((a, b) => a.distance - b.distance);
 
-  const filteredHospitals = sortedHospitals.filter(
-    (hospital) =>
-      hospital.title.toLowerCase().includes(filterLocation.toLowerCase()) &&
-      (filterService === "" || hospital.services.includes(filterService))
+  const filteredHospitals = sortedHospitals.filter(hospital => 
+    hospital.title.toLowerCase().includes(filterLocation.toLowerCase()) &&
+    (filterService === "" || hospital.services.includes(filterService))
   );
 
   const customIcon = L.icon({
@@ -171,11 +160,11 @@ export default function HospitalLocator() {
     iconSize: [30, 50],
     iconAnchor: [15, 50],
     popupAnchor: [0, -41],
-    className: "red-marker",
+    className: 'red-marker',
   });
-
+  
   const handleBookingClick = () => {
-    navigate("/appointmentbooking");
+    navigate('/appointmentbooking');
   };
 
   const handleMarkerClick = (hospital) => {
@@ -184,6 +173,7 @@ export default function HospitalLocator() {
 
   return (
     <>
+   <div>
       <MainSecComp
         className="relative w-full h-96 md:h-auto md:max-h-screen overflow-hidden"
         hero={hero1}
@@ -214,12 +204,7 @@ export default function HospitalLocator() {
           <option value="Orthopedics">Orthopedics</option>
         </select>
 
-        <MapContainer
-          center={userLocation}
-          zoom={13}
-          className="mb-4"
-          style={{ height: "600px" }}
-        >
+        <MapContainer center={userLocation} zoom={13} className="mb-4" style={{ height: "600px" }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -229,10 +214,10 @@ export default function HospitalLocator() {
             <Popup>User Location</Popup>
           </Marker>
 
-          {filteredHospitals.map((hospital) => (
-            <Marker
-              key={hospital.id}
-              position={[hospital.lat, hospital.lng]}
+          {filteredHospitals.map(hospital => (
+            <Marker 
+              key={hospital.id} 
+              position={[hospital.lat, hospital.lng]} 
               icon={customIcon}
               eventHandlers={{ click: () => handleMarkerClick(hospital) }} // Set click handler
             >
@@ -242,11 +227,7 @@ export default function HospitalLocator() {
                 <p>Distance: {hospital.distance} km</p>
                 <p>Contact: {hospital.contactInfo}</p>
                 <p>
-                  <Link
-                    to="#"
-                    className="btn btn-primary"
-                    onClick={handleBookingClick}
-                  >
+                  <Link to="#" className="btn btn-primary" onClick={handleBookingClick}>
                     Book Now
                   </Link>
                 </p>
@@ -255,17 +236,10 @@ export default function HospitalLocator() {
           ))}
 
           <RoutingMachine
-            waypoints={
-              selectedHospital
-                ? [
-                    L.latLng(userLocation[0], userLocation[1]),
-                    L.latLng(selectedHospital.lat, selectedHospital.lng),
-                  ]
-                : []
-            }
+            waypoints={selectedHospital ? [L.latLng(userLocation[0], userLocation[1]), L.latLng(selectedHospital.lat, selectedHospital.lng)] : []}
           />
         </MapContainer>
-
+      </div> 
         <div className="container py-4">
           <div className="row">
             {filteredHospitals.length > 0 ? (
@@ -276,54 +250,30 @@ export default function HospitalLocator() {
                       src={hospital.photo}
                       className="card-img-top"
                       alt={hospital.title}
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: 'cover' }}
                     />
                     <div className="card-header">
                       <ul className="nav nav-tabs card-header-tabs">
                         <li className="nav-item">
                           <button
-                            className={`nav-link ${
-                              activeTabs[index] === "details" ? "active" : ""
-                            }`}
-                            onClick={() =>
-                              setActiveTabs((tabs) =>
-                                tabs.map((tab, i) =>
-                                  i === index ? "details" : tab
-                                )
-                              )
-                            }
+                            className={`nav-link ${activeTabs[index] === 'details' ? 'active' : ''}`}
+                            onClick={() => setActiveTabs(tabs => tabs.map((tab, i) => i === index ? 'details' : tab))}
                           >
                             Details
                           </button>
                         </li>
                         <li className="nav-item">
                           <button
-                            className={`nav-link ${
-                              activeTabs[index] === "contact" ? "active" : ""
-                            }`}
-                            onClick={() =>
-                              setActiveTabs((tabs) =>
-                                tabs.map((tab, i) =>
-                                  i === index ? "contact" : tab
-                                )
-                              )
-                            }
+                            className={`nav-link ${activeTabs[index] === 'contact' ? 'active' : ''}`}
+                            onClick={() => setActiveTabs(tabs => tabs.map((tab, i) => i === index ? 'contact' : tab))}
                           >
                             Contact Info
                           </button>
                         </li>
                         <li className="nav-item">
                           <button
-                            className={`nav-link ${
-                              activeTabs[index] === "book" ? "active" : ""
-                            }`}
-                            onClick={() =>
-                              setActiveTabs((tabs) =>
-                                tabs.map((tab, i) =>
-                                  i === index ? "book" : tab
-                                )
-                              )
-                            }
+                            className={`nav-link ${activeTabs[index] === 'book' ? 'active' : ''}`}
+                            onClick={() => setActiveTabs(tabs => tabs.map((tab, i) => i === index ? 'book' : tab))}
                           >
                             Book
                           </button>
@@ -331,38 +281,23 @@ export default function HospitalLocator() {
                       </ul>
                     </div>
                     <div className="card-body">
-                      {activeTabs[index] === "details" && (
+                      {activeTabs[index] === 'details' && (
                         <>
                           <h5 className="card-title">{hospital.title}</h5>
                           <p className="card-text">{hospital.description}</p>
-                          <p className="card-text">
-                            Address: {hospital.address}
-                          </p>
-                          <p className="card-text">
-                            Distance: {hospital.distance} km
-                          </p>
-                          <Link
-                            to={hospital.link}
-                            target="_blank"
-                            className="btn btn-primary"
-                          >
-                            View Details
-                          </Link>
+                          <p className="card-text">Address: {hospital.address}</p>
+                          <p className="card-text">Distance: {hospital.distance} km</p>
+                          <Link to={hospital.link} target="_blank" className="btn btn-primary">View Details</Link>
                         </>
                       )}
-                      {activeTabs[index] === "contact" && (
+                      {activeTabs[index] === 'contact' && (
                         <div>
-                          <p className="card-text">
-                            Telephone: {hospital.contactInfo}
-                          </p>
+                          <p className="card-text">Telephone: {hospital.contactInfo}</p>
                           <p className="card-text">Email: {hospital.email}</p>
                         </div>
                       )}
-                      {activeTabs[index] === "book" && (
-                        <button
-                          className="btn btn-primary"
-                          onClick={handleBookingClick}
-                        >
+                      {activeTabs[index] === 'book' && (
+                        <button className="btn btn-primary" onClick={handleBookingClick}>
                           Book Now
                         </button>
                       )}

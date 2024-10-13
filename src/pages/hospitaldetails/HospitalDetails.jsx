@@ -91,7 +91,7 @@ export default function HospitalDetails() {
 
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link mr-3" to="/hospitaldetails">
+              <Link className="nav-link mr-3" to="/hospitals">
                 Hospitals
               </Link>
             </li>

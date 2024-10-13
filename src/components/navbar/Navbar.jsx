@@ -10,7 +10,7 @@ import {
 } from "@headlessui/react";
 import {
   Bars3Icon,
-  BellIcon,
+  BellIcon, 
   MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -20,9 +20,9 @@ import { TextField } from "@mui/material";
 // import logo from "../../assets/logo.svg";
 const navigation = [
   { name: "Home", to: "/home" },
-  { name: "Locator", to: "/locator" },
-  { name: "Details", to: "/details" },
-  { name: "Booking", to: "/booking" },
+  { name: "Locator", to: "/hospitallocator" },
+  { name: "Details", to: "/hospitaldetails" },
+  { name: "Booking", to: "/appointmentbooking" },
 ];
 
 // Utility function to conditionally apply classes

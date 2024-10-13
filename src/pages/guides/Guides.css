@@ -1,21 +1,94 @@
 .guides-container {
     padding: 20px;
+    /* Adjust padding around the container */
 }
 
-.guides-container h1,
+.guides-container h1 {
+    font-size: 2.5rem;
+    /* Increased font size for the title */
+    font-weight: bold;
+    /* Make the title bold */
+    color: #333;
+    /* Darker color for better readability */
+}
+
 .guides-container p {
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    /* Increased font size for the paragraph */
+    color: #555;
+    /* Slightly lighter color for the paragraph */
 }
 
 .guides-container .card {
     margin-bottom: 20px;
+    /* Margin between cards */
+    border-radius: 10px;
+    /* Rounded corners for the cards */
+    transition: transform 0.2s;
+    /* Transition for hover effect */
+}
+
+.guides-container .card:hover {
+    transform: scale(1.05);
+    /* Slightly enlarge the card on hover */
 }
 
 .guides-container .card-title {
     font-size: 1.5rem;
+    /* Adjust font size for card titles */
     font-weight: bold;
+    /* Make card titles bold */
 }
 
 .guides-container .card-link {
     font-weight: bold;
+    /* Make the "Read More" link bold */
+    text-decoration: none;
+    /* Remove underline from link */
+}
+
+.guides-container .btn-primary {
+    background-color: #007bff;
+    /* Bootstrap primary button color */
+    border: none;
+    /* Remove border for a cleaner look */
+    transition: background-color 0.3s;
+    /* Transition for hover effect */
+}
+
+.guides-container .btn-primary:hover {
+    background-color: #0056b3;
+    /* Darker shade on hover */
+}
+
+.guides-header {
+    padding: 40px 0;
+    /* Adjust the padding around the header */
+}
+
+.guides-header h1 {
+    font-size: 2.5rem;
+    /* Adjust font size for the title */
+}
+
+.guides-header p {
+    font-size: 1.2rem;
+    /* Adjust font size for the paragraph */
+}
+
+.guides-container {
+    padding: 20px;
+    /* Adjust as needed */
+    margin-top: 20px;
+    /* Adjust margin-top if needed */
+}
+
+.ee {
+    background-color: #f8f9fa;
+    /* Lighter background color for the "Get Early Access" section */
+    padding: 40px;
+    /* Adjust padding as needed */
+    margin-top: 20px;
+    /* Adjust margin-top if needed */
+    font-size: larger;
 }

@@ -74,7 +74,7 @@ export default function Footer() {
                 <li className="mb-2">
                   <Link
                     className="hover:text-pr hover:underline transition"
-                    to="/contactus"
+                    to="/contact"
                   >
                     Contact Us
                   </Link>
@@ -103,7 +103,7 @@ export default function Footer() {
                 <li className="mb-2">
                   <Link
                     className="hover:text-pr hover:underline transition"
-                    to="/faqs"
+                    to="/faq"
                   >
                     FAQ
                   </Link>

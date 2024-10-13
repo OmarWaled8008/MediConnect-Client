@@ -1,51 +1,58 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import 'react-vertical-timeline-component/style.min.css';
 import "./App.css";
-import Notfound from "./pages/404/Notfound.module";
-import HomePage from "./pages/homepage/HomePage";
 import LayOut from "./components/LayOut";
-import HospitalDetails from "./pages/hospitaldetails/HospitalDetails";
-import AppointmentBooking from "./pages/appointmentbooking/AppointmentBooking";
+import HomePage from "./pages/homepage/HomePage";
+import AboutUs from "./pages/aboutus/AboutUs";
+import UserProfile from "./pages/userprofile/UserProfile";
+import Signup from "./pages/signup/Signup";
+import PatientReviews from "./pages/patientreviews/PatientReviews";
+import Login from "./pages/login/Login";
 import Support from "./pages/support/Support";
 import HospitalLocator from "./pages/hospitallocator/HospitalLocator";
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
-import Contact from "./pages/contact/Contact";
-import Guides from "./pages/guides/Guides";
-import Privacy from "./pages/privacy/Privacy";
-import TermsOfService from "./pages/termsofservice/TermsOfService";
-import Faqs from "./pages/faqs/Faqs";
-import Services from "./pages/servicess/Services";
+import HospitalDetails from "./pages/hospitaldetails/HospitalDetails";
+import Hospitals from "./pages/hospitaldetails/Hospitals";
+import AppointmentBooking from "./pages/appointmentbooking/AppointmentBooking";
+import Telemedicine from "./pages/telemedicine/Telemedicine";
+import Blog from "./pages/blog/Blog";
+import Contact from "./pages/Contact/Contact"; // Ensure the file is named `Contact.jsx`
+import Privacy from "./pages/Privacy/privacy";
+import FAQ from "./pages/faq/faq";
+import Services from "./pages/servicess/Services.jsx";
+import Guides from "./pages/Guides/Guides.jsx"
+import TermsOfService from "./pages/TermsOfService/TermsOfService.jsx"
 
-const router = createBrowserRouter([
-  {
-    path: "",
-    element: <LayOut />,
-    children: [
-      { path: "/", element: <HomePage /> },
-      { path: "home", element: <HomePage /> },
-      { path: "locator", element: <HospitalLocator /> },
-      { path: "details", element: <HospitalDetails /> },
-      { path: "booking", element: <AppointmentBooking /> },
-      { path: "support", element: <Support /> },
-      { path: "contactus", element: <Contact /> },
-      { path: "guides", element: <Guides /> },
-      { path: "privacy", element: <Privacy /> },
-      { path: "terms", element: <TermsOfService /> },
-      { path: "faqs", element: <Faqs /> },
-      { path: "services", element: <Services /> },
-    ],
-  },
-  { path: "login", element: <Login /> },
-  { path: "signup", element: <Signup /> },
-  { path: "*", element: <Notfound /> },
+const router = createBrowserRouter([{
+        path: "/",
+        element: < LayOut / > ,
+        children: [
+            { path: "", element: < HomePage / > },
+            { path: "home", element: < HomePage / > },
+            { path: "userprofile", element: < UserProfile / > },
+            { path: "patientreviews", element: < PatientReviews / > },
+            { path: "hospitallocator", element: < HospitalLocator / > },
+            { path: "hospitaldetails", element: < HospitalDetails / > },
+            { path: "hospitals", element: < Hospitals / > },
+            { path: "appointmentbooking", element: < AppointmentBooking / > },
+            { path: "telemedicine", element: < Telemedicine / > },
+            { path: "support", element: < Support / > },
+            { path: "about", element: < AboutUs / > },
+            { path: "blog", element: < Blog / > },
+            { path: "contact", element: < Contact / > },
+            { path: "privacy", element: < Privacy / > },
+            { path: "faq", element: < FAQ / > },
+            { path: "services", element: < Services / > },
+            { path: "guides", element: < Guides / > },
+            { path: "terms", element: < TermsOfService / > },
+        ],
+    },
+    { path: "/login", element: < Login / > },
+    { path: "/signup", element: < Signup / > },
 ]);
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+    return <RouterProvider router = { router }
+    />;
 }
 
 export default App;

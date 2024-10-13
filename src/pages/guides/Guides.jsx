@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "./Guides.css";
+import pic from "../../assets/circlescatterhaikei.svg";
 
 const Guides = () => {
   const guideData = [
@@ -43,25 +44,38 @@ const Guides = () => {
   ];
 
   return (
-    <Container className="guides-container">
-      <h1 className="text-center my-5">Guides</h1>
-      <p className="text-center mb-5">
-        Helpful resources to empower your healthcare journey.
-      </p>
-      <Row>
-        {guideData.map((guide, index) => (
-          <Col md={6} lg={4} className="mb-4" key={index}>
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>{guide.title}</Card.Title>
-                <Card.Text>{guide.description}</Card.Text>
-                <Card.Link href={guide.link}>Read More</Card.Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div className="min-h-screen flex items-center justify-center py-10 relative">
+    <div className="absolute top-0 left-0 w-full h-auto justify-center">
+      <img
+        src={pic}
+        alt="Background Design"
+        className="w-full object-cover h-64"
+      />
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-da mt-2">
+        <h1 className="text-5xl font-bold">Guides</h1>
+        <p className="text-lg mt-1">Helpful resources to empower your healthcare journey.</p>
+      </div>
+    </div>
+
+ <div className="w-full max-w-4xl bg-white p-10 rounded-lg shadow-md z-10 relative mt-40">
+      <Container className="guides-container mt-3"> {/* Added mt-3 for margin-top */}
+        <Row>
+          {guideData.map((guide, index) => (
+            <Col md={6} lg={4} className="mb-4" key={index}>
+              <Card className="h-100 shadow border-0">
+                <Card.Body>
+                  <Card.Title className="text-uppercase fw-bold">{guide.title}</Card.Title>
+                  <Card.Text className="mb-4">{guide.description}</Card.Text>
+                  <Card.Link href={guide.link} className="btn btn-primary">Read More</Card.Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+     </div> 
+    </div>
   );
 };
 

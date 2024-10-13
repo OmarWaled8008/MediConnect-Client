@@ -17,35 +17,25 @@
     margin-bottom: 20px;
     border-radius: 10px;
     transition: transform 0.2s;
-    background-color: rgba(255, 255, 255, 0.9);
-    /* Slightly transparent white background */
 }
 
 .guides-container .card:hover {
     transform: scale(1.05);
-    background-color: rgba(240, 240, 240, 0.8);
-    /* Light gray on hover */
 }
 
 .guides-container .card-title {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #222;
-    /* Darker color for better contrast */
 }
 
 .guides-container .btn-primary {
     background-color: #007bff;
-    /* Bootstrap primary color */
     border: none;
     transition: background-color 0.3s;
-    color: white;
-    /* Ensure button text is readable */
 }
 
 .guides-container .btn-primary:hover {
     background-color: #0056b3;
-    /* Darker shade for hover effect */
 }
 
 .custom-card {
@@ -60,4 +50,26 @@
 .custom-card:hover {
     transform: scale(1.05);
     /* Optional: Scale up on hover */
+}
+
+.custom-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.guides-container .row {
+    margin-top: 20px;
+}
+
+.guides-container .row .col {
+    display: flex;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: 1.25rem;
 }
