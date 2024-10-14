@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./hospitallocator.css";
-import hero1 from "../../assets/loc.png";
+import hero1 from "../../assets/bb.jpg";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -9,6 +9,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate, Link } from 'react-router-dom';
+
 const initialHospitals = [
   {
     id: 1,
@@ -75,7 +76,7 @@ const initialHospitals = [
     lng: 11.147167 // Longitude from the provided data
   },
   {
-    id: 5, // New ID for the hospital
+    id: 5,
     title: "Glim Hospital",
     link: "https://healtheg.com/ar/Item/2960/مستشفى-جليم",
     address: "4 Zahran Rushdi St., Alexandria-Grim",
@@ -89,6 +90,22 @@ const initialHospitals = [
     mapLink: "https://www.google.com/maps?q=Glim+Hospital",
     lat: 31.2377734, // Latitude from the provided data
     lng: 29.9618553 // Longitude from the provided data
+  },
+  {
+    id: 6, // New ID for the new hospital
+    title: "Horus Specialist Hospital",
+    link: "https://healtheg.com/ar/Item/39379/--مستشفى-حورس-التخصصي",
+    address: "Hurghada Department, Red Sea",
+    icuAvailability: "N/A",
+    services: [],
+    photo: "https://healtheg.com//content/images/healtheg_300.png",
+    contactInfo: "01126666499",
+    phone: "01126666499",
+    email: "", // No email provided
+    description: "N/A", // No description provided
+    mapLink: "https://www.google.com/maps?q=Horus+Specialist+Hospital",
+    lat: null, // No latitude provided
+    lng: null // No longitude provided
   }
 ];
 
@@ -147,14 +164,22 @@ const HospitalLocator = () => {
     return R * c;
   };
 
-  const sortedHospitals = hospitals
+  const hospitalsWithCoordinates = hospitals.filter(hospital => hospital.lat !== null && hospital.lng !== null);
+
+  const sortedHospitals = hospitalsWithCoordinates
     .map(hospital => ({
       ...hospital,
       distance: calculateDistance(userLocation[0], userLocation[1], hospital.lat, hospital.lng).toFixed(2)
     }))
     .sort((a, b) => a.distance - b.distance);
 
-  const filteredHospitals = sortedHospitals.filter(hospital => 
+  const hospitalsWithoutCoordinates = hospitals.filter(hospital => hospital.lat === null || hospital.lng === null)
+    .map(hospital => ({
+      ...hospital,
+      distance: "null"
+    }));
+
+  const filteredHospitals = [...sortedHospitals, ...hospitalsWithoutCoordinates].filter(hospital => 
     hospital.title.toLowerCase().includes(filterLocation.toLowerCase()) &&
     (filterService === "" || hospital.services.includes(filterService))
   );
@@ -220,24 +245,26 @@ const HospitalLocator = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {filteredHospitals.map(hospital => (
-            <Marker
-              key={hospital.id}
-              position={[hospital.lat, hospital.lng]}
-              icon={customIcon}
-              eventHandlers={{ click: () => handleMarkerClick(hospital) }}
-            >
-              <Popup>
-                <div>
-                  <h4>{hospital.title}</h4>
-                  <p>Distance: {hospital.distance} km</p>
-                  <p>{hospital.address}</p>
-                  <p>Contact: {hospital.contactInfo}</p>
-                  <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>
-                    Book Now
-                  </Link>
-                </div>
-              </Popup>
-            </Marker>
+            hospital.lat !== null && hospital.lng !== null && (
+              <Marker
+                key={hospital.id}
+                position={[hospital.lat, hospital.lng]}
+                icon={customIcon}
+                eventHandlers={{ click: () => handleMarkerClick(hospital) }}
+              >
+                <Popup>
+                  <div>
+                    <h4>{hospital.title}</h4>
+                    <p>Distance: {hospital.distance} km</p>
+                    <p>{hospital.address}</p>
+                    <p>Contact: {hospital.contactInfo}</p>
+                    <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>
+                      Book Now
+                    </Link>
+                  </div>
+                </Popup>
+              </Marker>
+            )
           ))}
           <Marker position={userLocation} icon={userIcon}>
             <Popup>Your Location</Popup>
@@ -282,27 +309,31 @@ const HospitalLocator = () => {
                   </ul>
                 </div>
                 <div className="card-body">
-                  {activeTabs[index] === "details" && <>
-                          <h5 className="card-title">{hospital.title}</h5>
-                          <p className="card-text">{hospital.description}</p>
-                          <p className="card-text">Address: {hospital.address}</p>
-                          <p className="card-text">Distance: {hospital.distance} km</p>
-                          <Link to={hospital.link} target="_blank" className="btn btn-primary">View Details</Link>
-                        </>}
-                  {activeTabs[index] === "contact" && (
-                    <div>
-                      <p className="card-text">Telephone: {hospital.contactInfo}</p>
-                      <p className="card-text">Contact: {hospital.contactInfo}</p>
+                  {activeTabs[index] === 'details' && (
+                    <>
+                      <p className="card-text">{hospital.description}</p>
+                      <p className="card-text">Distance: {hospital.distance}</p>
+                      <Link to={hospital.mapLink} target="_blank" className="btn btn-outline-primary">View on Map</Link>
+                    </>
+                  )}
+                  {activeTabs[index] === 'contact' && (
+                    <>
+                      <p className="card-text">Phone: {hospital.phone}</p>
                       <p className="card-text">Email: {hospital.email}</p>
-                    </div>
+                    </>
                   )}
-                  {activeTabs[index] === "location" && (
-                    <p className="card-text">Address: {hospital.address}</p>
+                  {activeTabs[index] === 'location' && (
+                    <>
+                      <p className="card-text">Address: {hospital.address}</p>
+                      <p className="card-text">City/Area: {hospital.city}</p>
+                      <p className="card-text">Street Address: {hospital.streetAddress}</p>
+                    </>
                   )}
-                  {activeTabs[index] === "booking" && (
-                    <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>
-                      Book Now
-                    </Link>
+                  {activeTabs[index] === 'booking' && (
+                    <>
+                      <p className="card-text">Book an appointment at {hospital.title}</p>
+                      <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>Book Now</Link>
+                    </>
                   )}
                 </div>
               </div>
