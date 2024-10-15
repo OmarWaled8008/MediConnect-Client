@@ -15,12 +15,12 @@ import Hospitals from "./pages/hospitaldetails/Hospitals";
 import AppointmentBooking from "./pages/appointmentbooking/AppointmentBooking";
 import Telemedicine from "./pages/telemedicine/Telemedicine";
 import Blog from "./pages/blog/Blog";
-import Contact from "./pages/Contact/Contact"; // Ensure the file is named `Contact.jsx`
-import Privacy from "./pages/Privacy/privacy";
+import Contact from "./pages/contact/Contact"; // Ensure the file is named `Contact.jsx`
+import Privacy from "./pages/privacy/Privacy";
 import FAQ from "./pages/faq/faq";
 import Services from "./pages/servicess/Services.jsx";
-import Guides from "./pages/Guides/Guides.jsx"
-import TermsOfService from "./pages/TermsOfService/TermsOfService.jsx"
+import Guides from "./pages/guides/Guides.jsx"
+import TermsOfService from "./pages/termsofservice/TermsOfService.jsx"
 import chatbox from "./components/chatbox/ChatBox.jsx"
 
 const router = createBrowserRouter([{
