@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
+import mainCSS from "./mainSecComp.module.css";
+import "../../assets/blob-scene-haikei.svg";
 export default function MainSecComp({ hero, heading }) {
-    const [first, setfirst] = useState('')
+  const [first, setfirst] = useState("");
   useEffect(() => {
     document.getElementById("head1").innerHTML = heading;
-    setfirst(hero)
-    
-  }, [heading , hero]);
+    setfirst(hero);
+  }, [heading, hero]);
   return (
     <>
-      <main>
-        <div className=" md:h-[90vh] max-w-[75rem] mx-auto p-0 pt-20 pb-10 flex flex-col items-center md:flex-row justify-between">
+      <main className={`${mainCSS.bgi} `}>
+        <div
+          className={`md:h-[90vh] max-w-[75rem] mx-auto p-0 pt-20 pb-10 flex flex-col items-center md:flex-row justify-between`}
+        >
           <div
             className={` py-3 h-full xl:w-1/2 flex flex-col justify-center  `}
           >
@@ -26,15 +28,15 @@ export default function MainSecComp({ hero, heading }) {
               </p>
             </h1>
             <div id="headlink" className="flex w-full justify-start space-x-4">
-              <Link to="/hospitallocator" className="button2 text-light">
+              <Link to="/hospitallocator" className="ourbtn text-light">
                 Find a Hospital
               </Link>
-              <Link to="/appointmentbooking" className="button1">
+              <Link to="/appointmentbooking" className="ourbtn2">
                 Book an Appointment
               </Link>
             </div>
           </div>
-          <div className=" h-full">
+          <div className="flex flex-col justify-center h-full">
             <img src={first} className={`w-full block scale-[1.15]`} alt="" />
           </div>
         </div>

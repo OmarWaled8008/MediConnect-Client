@@ -39,7 +39,7 @@ export default function Contact() {
               className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-pr"
               required
             />
-          </div>
+          </div>     
           <div className="flex flex-col">
             <label className="mb-2 text-gray-700 font-medium">
               Email Adress

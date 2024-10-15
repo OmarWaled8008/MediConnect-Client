@@ -1,7 +1,7 @@
 import React from "react";
 import pic from "../../assets/circlescatterhaikei.svg";
 
-function TermsOfService() {
+function TtermsOfService() {
   return (
     <div className="min-h-screen flex items-center justify-center py-10 relative">
       <div className="absolute top-0 left-0 w-full h-auto justify-center">
@@ -79,4 +79,4 @@ function TermsOfService() {
   );
 }
 
-export default TermsOfService;
+export default TtermsOfService;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./hospitallocator.css";
-import hero1 from "../../assets/bb.jpg";
+import hero1 from "../../assets/home-mmm.png";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -8,7 +8,10 @@ import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const initialHospitals = [
   {
@@ -40,8 +43,9 @@ const initialHospitals = [
     contactInfo: "0226161840 - +20226175241",
     phone: "0226161840",
     email: "contact@doctor.com",
-    description: "A leading medical center providing various healthcare services.",
-    mapLink: "https://www.google.com/maps?q=Doctor+Medical+Center"
+    description:
+      "A leading medical center providing various healthcare services.",
+    mapLink: "https://www.google.com/maps?q=Doctor+Medical+Center",
   },
   {
     id: 3,
@@ -57,7 +61,7 @@ const initialHospitals = [
     phone: "035905175",
     email: "manal.daghar@clinic.com",
     description: "Specializing in psychological health and therapy.",
-    mapLink: "https://www.google.com/maps?q=Psychological+Clinic"
+    mapLink: "https://www.google.com/maps?q=Psychological+Clinic",
   },
   {
     id: 4,
@@ -72,8 +76,8 @@ const initialHospitals = [
     email: "info@alhassan.com", // Placeholder email
     description: "N/A", // Update if more information is available
     mapLink: "https://www.google.com/maps?q=Al-Hassan+Hospital",
-    lat: 49.405260, // Latitude from the provided data
-    lng: 11.147167 // Longitude from the provided data
+    lat: 49.40526, // Latitude from the provided data
+    lng: 11.147167, // Longitude from the provided data
   },
   {
     id: 5,
@@ -89,7 +93,7 @@ const initialHospitals = [
     description: "N/A", // Update if more information is available
     mapLink: "https://www.google.com/maps?q=Glim+Hospital",
     lat: 31.2377734, // Latitude from the provided data
-    lng: 29.9618553 // Longitude from the provided data
+    lng: 29.9618553, // Longitude from the provided data
   },
   {
     id: 6, // New ID for the new hospital
@@ -105,8 +109,8 @@ const initialHospitals = [
     description: "N/A", // No description provided
     mapLink: "https://www.google.com/maps?q=Horus+Specialist+Hospital",
     lat: null, // No latitude provided
-    lng: null // No longitude provided
-  }
+    lng: null, // No longitude provided
+  },
 ];
 
 const RoutingMachine = ({ waypoints }) => {
@@ -116,7 +120,7 @@ const RoutingMachine = ({ waypoints }) => {
     const routingControl = L.Routing.control({
       waypoints,
       lineOptions: {
-        styles: [{ color: 'red', weight: 4 }],
+        styles: [{ color: "red", weight: 4 }],
       },
       createMarker: () => null,
       addWaypoints: false,
@@ -135,53 +139,86 @@ const HospitalLocator = () => {
   const [filterLocation, setFilterLocation] = useState("");
   const [filterService, setFilterService] = useState("");
   const [userLocation, setUserLocation] = useState([31.2664943, 30.0136571]);
-  const [activeTabs, setActiveTabs] = useState(Array(hospitals.length).fill('details'));
+  const [activeTabs, setActiveTabs] = useState(
+    Array(hospitals.length).fill("details")
+  );
   const [selectedHospital, setSelectedHospital] = useState(null);
   const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["hospitalsData"],
+    queryFn: getHospitals,
+  });
+
+  async function getHospitals() {
+    return await axios.get("http://localhost:8000/api/data/hospitals");
+  }
+
+  console.log(data?.data);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         setUserLocation([position.coords.latitude, position.coords.longitude]);
       },
-      error => {
+      (error) => {
         console.error("Error getting user location:", error);
-        alert("Unable to retrieve your location. Please enable location services.");
+        alert(
+          "Unable to retrieve your location. Please enable location services."
+        );
       }
     );
   }, []);
 
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   const calculateDistance = (lat1, lng1, lat2, lng2) => {
-    const toRad = x => (x * Math.PI) / 180;
+    const toRad = (x) => (x * Math.PI) / 180;
     const R = 6371; // Radius of the Earth in km
     const dLat = toRad(lat2 - lat1);
     const dLng = toRad(lng2 - lng1);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
 
-  const hospitalsWithCoordinates = hospitals.filter(hospital => hospital.lat !== null && hospital.lng !== null);
+  const hospitalsWithCoordinates = hospitals.filter(
+    (hospital) => hospital.lat !== null && hospital.lng !== null
+  );
 
   const sortedHospitals = hospitalsWithCoordinates
-    .map(hospital => ({
+    .map((hospital) => ({
       ...hospital,
-      distance: calculateDistance(userLocation[0], userLocation[1], hospital.lat, hospital.lng).toFixed(2)
+      distance: calculateDistance(
+        userLocation[0],
+        userLocation[1],
+        hospital.lat,
+        hospital.lng
+      ).toFixed(2),
     }))
     .sort((a, b) => a.distance - b.distance);
 
-  const hospitalsWithoutCoordinates = hospitals.filter(hospital => hospital.lat === null || hospital.lng === null)
-    .map(hospital => ({
+  const hospitalsWithoutCoordinates = hospitals
+    .filter((hospital) => hospital.lat === null || hospital.lng === null)
+    .map((hospital) => ({
       ...hospital,
-      distance: "null"
+      distance: "null",
     }));
 
-  const filteredHospitals = [...sortedHospitals, ...hospitalsWithoutCoordinates].filter(hospital => 
-    hospital.title.toLowerCase().includes(filterLocation.toLowerCase()) &&
-    (filterService === "" || hospital.services.includes(filterService))
+  const filteredHospitals = [
+    ...sortedHospitals,
+    ...hospitalsWithoutCoordinates,
+  ].filter(
+    (hospital) =>
+      hospital.title.toLowerCase().includes(filterLocation.toLowerCase()) &&
+      (filterService === "" || hospital.services.includes(filterService))
   );
 
   const customIcon = L.icon({
@@ -196,11 +233,11 @@ const HospitalLocator = () => {
     iconSize: [30, 50],
     iconAnchor: [15, 50],
     popupAnchor: [0, -41],
-    className: 'red-marker',
+    className: "red-marker",
   });
 
   const handleBookingClick = (hospital) => {
-    navigate('/appointmentbooking', { state: { hospital } });
+    navigate("/appointmentbooking", { state: { hospital } });
   };
 
   const handleMarkerClick = (hospital) => {
@@ -210,67 +247,85 @@ const HospitalLocator = () => {
   return (
     <div className="hospital-locator-container">
       <MainSecComp
-        headerText="Hospital Locator"
-        paragraphText="Find the best hospitals near you."
-        image={hero1}
+        hero={hero1}
+        heading={`<p>Hospital Locator,</p><p>Find the best hospitals near you.</p>`}
       />
       <div className="filter-container">
-        <h1>Search for Hospitals</h1>
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Search by hospital name"
-          value={filterLocation}
-          onChange={(e) => setFilterLocation(e.target.value)}
-        />
-        <select
-          className="form-select mb-3"
-          value={filterService}
-          onChange={(e) => setFilterService(e.target.value)}
-        >
-          <option value="">All Services</option>
-          <option value="Cardiology">Cardiology</option>
-          <option value="Emergency">Emergency</option>
-          <option value="Surgery">Surgery</option>
-          <option value="Pediatrics">Pediatrics</option>
-          <option value="Orthopedics">Orthopedics</option>
-        </select>
+        <h2 className="text-4xl font-semibold text-center py-5">
+          Search for Hospitals
+        </h2>
+        <div className="max-w-[75rem] mx-auto p-5 row">
+          <input
+            type="text"
+            className="form-control m-0"
+            placeholder="Search by hospital name"
+            value={filterLocation}
+            onChange={(e) => setFilterLocation(e.target.value)}
+          />
+          <select
+            className="form-select my-3"
+            value={filterService}
+            onChange={(e) => setFilterService(e.target.value)}
+          >
+            <option value="">All Services</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Emergency">Emergency</option>
+            <option value="Surgery">Surgery</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Orthopedics">Orthopedics</option>
+          </select>
+        </div>
+
         <MapContainer
           center={userLocation}
           zoom={13}
           style={{ height: "600px", width: "100%" }}
+          className="max-w-[75rem] mx-auto p-5"
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          {filteredHospitals.map(hospital => (
-            hospital.lat !== null && hospital.lng !== null && (
-              <Marker
-                key={hospital.id}
-                position={[hospital.lat, hospital.lng]}
-                icon={customIcon}
-                eventHandlers={{ click: () => handleMarkerClick(hospital) }}
-              >
-                <Popup>
-                  <div>
-                    <h4>{hospital.title}</h4>
-                    <p>Distance: {hospital.distance} km</p>
-                    <p>{hospital.address}</p>
-                    <p>Contact: {hospital.contactInfo}</p>
-                    <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>
-                      Book Now
-                    </Link>
-                  </div>
-                </Popup>
-              </Marker>
-            )
-          ))}
+          {filteredHospitals.map(
+            (hospital) =>
+              hospital.lat !== null &&
+              hospital.lng !== null && (
+                <Marker
+                  key={hospital.id}
+                  position={[hospital.lat, hospital.lng]}
+                  icon={customIcon}
+                  eventHandlers={{ click: () => handleMarkerClick(hospital) }}
+                >
+                  <Popup>
+                    <div>
+                      <h4>{hospital.title}</h4>
+                      <p>Distance: {hospital.distance} km</p>
+                      <p>{hospital.address}</p>
+                      <p>Contact: {hospital.contactInfo}</p>
+                      <Link
+                        to="#"
+                        className="btn btn-primary"
+                        onClick={() => handleBookingClick(hospital)}
+                      >
+                        Book Now
+                      </Link>
+                    </div>
+                  </Popup>
+                </Marker>
+              )
+          )}
           <Marker position={userLocation} icon={userIcon}>
             <Popup>Your Location</Popup>
           </Marker>
           <RoutingMachine
-            waypoints={selectedHospital ? [L.latLng(userLocation[0], userLocation[1]), L.latLng(selectedHospital.lat, selectedHospital.lng)] : []}
+            waypoints={
+              selectedHospital
+                ? [
+                    L.latLng(userLocation[0], userLocation[1]),
+                    L.latLng(selectedHospital.lat, selectedHospital.lng),
+                  ]
+                : []
+            }
           />
         </MapContainer>
       </div>
@@ -290,49 +345,73 @@ const HospitalLocator = () => {
                   alt={hospital.title}
                 />
                 <div className="card-header">
-                  <h5 className="card-title py-3 text-da font-medium">{hospital.title}</h5>
+                  <h5 className="card-title py-3 text-da font-medium">
+                    {hospital.title}
+                  </h5>
                   <ul className="nav nav-tabs card-header-tabs">
-                    {['details', 'contact', 'location', 'booking'].map((tab) => (
-                      <li className="nav-item" key={tab}>
-                        <button
-                          className={`nav-link ${activeTabs[index] === tab ? "active" : ""}`}
-                          onClick={() => setActiveTabs(prev => {
-                            const newTabs = [...prev];
-                            newTabs[index] = tab;
-                            return newTabs;
-                          })}
-                        >
-                          {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                        </button>
-                      </li>
-                    ))}
+                    {["details", "contact", "location", "booking"].map(
+                      (tab) => (
+                        <li className="nav-item" key={tab}>
+                          <button
+                            className={`nav-link ${
+                              activeTabs[index] === tab ? "active" : ""
+                            }`}
+                            onClick={() =>
+                              setActiveTabs((prev) => {
+                                const newTabs = [...prev];
+                                newTabs[index] = tab;
+                                return newTabs;
+                              })
+                            }
+                          >
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                          </button>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
                 <div className="card-body">
-                  {activeTabs[index] === 'details' && (
+                  {activeTabs[index] === "details" && (
                     <>
                       <p className="card-text">{hospital.description}</p>
                       <p className="card-text">Distance: {hospital.distance}</p>
-                      <Link to={hospital.mapLink} target="_blank" className="btn btn-outline-primary">View on Map</Link>
+                      <Link
+                        to={hospital.mapLink}
+                        target="_blank"
+                        className="btn btn-outline-primary"
+                      >
+                        View on Map
+                      </Link>
                     </>
                   )}
-                  {activeTabs[index] === 'contact' && (
+                  {activeTabs[index] === "contact" && (
                     <>
                       <p className="card-text">Phone: {hospital.phone}</p>
                       <p className="card-text">Email: {hospital.email}</p>
                     </>
                   )}
-                  {activeTabs[index] === 'location' && (
+                  {activeTabs[index] === "location" && (
                     <>
                       <p className="card-text">Address: {hospital.address}</p>
                       <p className="card-text">City/Area: {hospital.city}</p>
-                      <p className="card-text">Street Address: {hospital.streetAddress}</p>
+                      <p className="card-text">
+                        Street Address: {hospital.streetAddress}
+                      </p>
                     </>
                   )}
-                  {activeTabs[index] === 'booking' && (
+                  {activeTabs[index] === "booking" && (
                     <>
-                      <p className="card-text">Book an appointment at {hospital.title}</p>
-                      <Link to="#" className="btn btn-primary" onClick={() => handleBookingClick(hospital)}>Book Now</Link>
+                      <p className="card-text">
+                        Book an appointment at {hospital.title}
+                      </p>
+                      <Link
+                        to="#"
+                        className="btn btn-primary"
+                        onClick={() => handleBookingClick(hospital)}
+                      >
+                        Book Now
+                      </Link>
                     </>
                   )}
                 </div>
