@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import "./hospitaldetails.css"; // Ensure this path is correct
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate, Link } from "react-router-dom";
 import hero1 from "../../assets/docs.png";
 import hero2 from "../../assets/avatarm.svg";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-
-
-
+// Sample Doctor Data (replace this with your actual data source)
 const doctorData = [
   {
     name: "Prof. Ayman Ibrahim Bais",
@@ -17,52 +17,46 @@ const doctorData = [
     address:
       "The East Panorama Building, the third floor, administrative - tram station, Sidi Jaber Al -Sheikh, the highest national bank - Alexandria - Egypt",
     cityArea: "Alexandria - Sidi Jaber",
-    imageUrl: hero2, // Use the specified image link
+    imageUrl: hero2,
   },
-  {
-    name: "Tariq Reda",
-    specialties: "Extreme feeding and feeding, slimming and feeding",
-    address: "Zamalek: Taha Hussein, Zamalek",
-    cityArea: "Cairo - Zamalek",
-    imageUrl: hero2, // Use the specified image link
-  },
-  {
-    name: "Nutrition expert Muhammad Ibrahim Al -Shafi’i",
-    specialties: "Adult feeding and feeding, slimming and feeding",
-    address: "Nasr City: Abbas Al -Akkad Street",
-    cityArea: "Cairo - Nasr City",
-    imageUrl: hero2, // Use the specified image link
-  },
-  {
-    name: "Nutrition expert Muhammad Ibrahim Al -Shafi’i",
-    specialties: "Extreme loss and feeding, slimming and feeding",
-    address: "Engineers: The League of Arab States",
-    cityArea: "Giza - Engineers",
-    imageUrl: hero2, // Use the specified image link
-  },
-  {
-    name: "Nutrition expert Muhammad Othman Muhammad",
-    specialties:
-      "Extreme feedback and feeding, child feeding and feeding, slimming and feeding",
-    address: "Sheikh Zayed: Aquan Mall",
-    cityArea: "Giza - Sheikh Zayed",
-    imageUrl: hero2, // Use the specified image link
-  },
+  // Add other doctor objects here...
 ];
 
 export default function HospitalDetails() {
   const navigate = useNavigate();
-  const [activeTabs, setActiveTabs] = useState(Array(doctorData.length).fill('details')); // Array to hold active tab state for each doctor
+  const [activeTabs, setActiveTabs] = useState(
+    Array(doctorData.length).fill("details")
+  ); // Array to hold active tab state for each doctor
+  const [type, setType] = useState("hospitals"); // State to control type, e.g., hospitals, doctors
 
+  // Fetch data using React Query
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["data", type],
+    queryFn: () =>
+      axios
+        .get(`http://localhost:8000/api/data/${type}`)
+        .then((res) => res.data),
+    enabled: !!type, // Ensure type is available before making the request
+  });
+
+  console.log(data);
   const handleTabClick = (index, tab) => {
     const newActiveTabs = [...activeTabs]; // Create a copy of the active tabs array
     newActiveTabs[index] = tab; // Update the active tab for the specific doctor
     setActiveTabs(newActiveTabs); // Set the new active tabs array
   };
+
   const handleBookingClick = () => {
-    navigate('/appointmentbooking'); // Change this path to your booking page route
+    navigate("/appointmentbooking"); // Navigate to the booking page
   };
 
+  const handleTypeChange = (newType) => {
+    setType(newType); // Change type when the user clicks a different nav button
+  };
+
+  // Render loading or error states for API call
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching data...</div>;
 
   return (
     <>
@@ -90,20 +84,40 @@ export default function HospitalDetails() {
           </button>
 
           <ul className="navbar-nav ms-auto">
+            {/* Hospitals Navigation Button */}
             <li className="nav-item">
-              <Link className="nav-link mr-3" to="/hospitals">
+              <button
+                className={`nav-link mr-3 ${
+                  type === "hospitals" ? "active" : ""
+                }`}
+                onClick={() => handleTypeChange("hospitals")}
+              >
                 Hospitals
-              </Link>
+              </button>
             </li>
+
+            {/* Doctors Navigation Button */}
             <li className="nav-item">
-              <Link className="nav-link mr-3 active" aria-current="page" to="#">
+              <button
+                className={`nav-link mr-3 ${
+                  type === "doctors" ? "active" : ""
+                }`}
+                onClick={() => handleTypeChange("doctors")}
+              >
                 Doctors
-              </Link>
+              </button>
             </li>
+
+            {/* Add more nav items as needed */}
             <li className="nav-item">
-              <Link className="nav-link mr-3" to="#">
-                Pricing
-              </Link>
+              <button
+                className={`nav-link mr-3 ${
+                  type === "medical-centers" ? "active" : ""
+                }`}
+                onClick={() => handleTypeChange("medical-centers")}
+              >
+                Medical Centers
+              </button>
             </li>
           </ul>
 
@@ -123,23 +137,23 @@ export default function HospitalDetails() {
       </nav>
 
       <div className="max-w-[75rem] mx-auto py-5">
-        {/* <button className="btn btn-secondary mb-3" onClick={() => navigate(-1)}>
-          Back
-        </button> */}
         <h2 className="text-center mb-5 text-4xl text-da font-semibold mt-5">
-          Available Doctors
+          Available {type.charAt(0).toUpperCase() + type.slice(1)}{" "}
+          {/* Dynamic heading */}
         </h2>
         <div className="row sm:p-3">
-          {doctorData.map((doctor, index) => (
-            <div key={index} className=" col-lg-4 col-md-6 col-12 mb-4">
+          {data.map((doctor, index) => (
+            <div key={index} className="col-lg-4 col-md-6 col-12 mb-4">
               <div className="card text-center doctor-card">
                 <img
-                  src={doctor.imageUrl} 
+                  src={doctor.imageUrl}
                   className="card-img-top doctor-image"
                   alt={doctor.name}
                 />
                 <div className="card-header">
-                  <h5 className="card-title py-3 text-da font-medium">{doctor.name}</h5>
+                  <h5 className="card-title py-3 text-da font-medium">
+                    {doctor.name}
+                  </h5>
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
                       <button
@@ -204,7 +218,7 @@ export default function HospitalDetails() {
                       className="btn btn-primary"
                       onClick={handleBookingClick}
                     >
-                      Book 4 Now{" "}
+                      Book Now
                     </button>
                   )}
                 </div>
@@ -215,5 +229,4 @@ export default function HospitalDetails() {
       </div>
     </>
   );
-
 }
