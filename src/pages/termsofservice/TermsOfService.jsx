@@ -16,7 +16,6 @@ function TermsOfService() {
           <p className="text-lg mt-1">We are here to assist you.</p>
         </div>
       </div>
-      {/* <img src={contactPic} alt="contact Design" className="w-1/4 object-right h-64" /> */}
 
       <div className="w-full max-w-4xl bg-white p-10 rounded-lg shadow-md z-10 relative mt-40">
         <h1 className="text-4xl font-bold mt-8 mb-6 text-pr text-center">
