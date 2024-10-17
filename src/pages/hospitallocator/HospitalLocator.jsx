@@ -130,12 +130,10 @@ const HospitalLocator = () => {
     <div className="hospital-locator-container">
       <MainSecComp
         hero={hero1}
-        heading={
-          <>
-            <p>Hospital Locator,</p>
-            <p>Find the best hospitals near you.</p>
-          </>
-        }
+       
+          
+            heading={`<p>Hospital Locator,</p><p>Find the best hospitals near you.</p>`}
+        
       />
       <div className="filter-container">
         <h2 className="text-4xl font-semibold text-center py-5">Search for Hospitals</h2>

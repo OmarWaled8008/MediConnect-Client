@@ -16,7 +16,7 @@ const MedicalCenters = () => {
     queryKey: ["data", type],
     queryFn: () =>
       axios
-        .get(`http://localhost:8000/api/data/medical`) // Updated endpoint for medical centers
+        .get(`http://localhost:8000/api/data/medical-centers`) // Updated endpoint for medical centers
         .then((res) => res.data),
   });
 
