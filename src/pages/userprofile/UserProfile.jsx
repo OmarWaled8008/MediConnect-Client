@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import pic from "../../assets/circlescatterhaikei.svg";
+import { BallTriangle } from "react-loader-spinner";
 
 export default function UserProfile() {
   // Get the token from Redux store
@@ -21,14 +22,21 @@ export default function UserProfile() {
     });
   }
 
-  if (isLoading) {
-    return (
-      <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">
-        Loading...
-      </div>
-    );
-  }
-
+   if (isLoading)
+     return (
+       <div className="absolute top-0 left-0 w-full h-[100vh] bg-white z-50 flex justify-center items-center">
+         <BallTriangle
+           height={100}
+           width={100}
+           radius={5}
+           color="#317bc4"
+           ariaLabel="ball-triangle-loading"
+           wrapperStyle={{}}
+           wrapperClass=""
+           visible={true}
+         />
+       </div>
+     );
   if (error) {
     return (
       <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">

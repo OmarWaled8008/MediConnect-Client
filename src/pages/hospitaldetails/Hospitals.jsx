@@ -5,23 +5,8 @@ import { useNavigate, Link, useParams } from "react-router-dom"; // Import Link
 import hero2 from "../../assets/avatarm.svg";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-
-const cardData = [
-  // Your static card data goes here...
-];
-
-const getStarRating = (rating) => {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5;
-  let stars = "⭐".repeat(fullStars);
-
-  if (halfStar) {
-    stars += "⭐️"; // Adding the half star
-  }
-
-  stars = stars.substring(0, 5); // Ensure the total stars do not exceed 5
-  return stars;
-};
+import hero1 from "../../assets/docs.png";
+import MainSecComp from "../../components/mainSecComp/MainSecComp";
 
 const HospitalDetails = () => {
   const { type } = useParams();
@@ -31,20 +16,21 @@ const HospitalDetails = () => {
     queryKey: ["data", type],
     queryFn: () =>
       axios
-        .get(`http://localhost:8000/api/data/${type}`)
+        .get(`http://localhost:8000/api/data/doctors`)
         .then((res) => res.data),
   });
 
   const navigate = useNavigate();
   const [activeTabs, setActiveTabs] = useState(
-    Array(cardData.length).fill("details")
-  ); // Track the active tab for each card
+    Array(data?.length || 0).fill("details")
+  ); // Initialize active tabs based on data length
 
   const handleTabClick = (index, tab) => {
     const newActiveTabs = [...activeTabs]; // Create a copy of the active tabs array
     newActiveTabs[index] = tab; // Update the active tab for the specific doctor
     setActiveTabs(newActiveTabs); // Set the new active tabs array
   };
+
   const handleBookingClick = () => {
     navigate("/appointmentbooking"); // Change this path to your booking page route
   };
@@ -59,16 +45,82 @@ const HospitalDetails = () => {
 
   return (
     <>
+      <MainSecComp
+        hero={hero1}
+        heading={`<p>Discover Hospitals,</p>
+              <p>Book Instantly.</p>`}
+      />
+
+      <nav className="navbar navbar-expand-lg max-w-[75rem] mx-auto py-3">
+        <div className="container-fluid">
+          <Link className="navbar-brand text-dark" to="#">
+            <strong>Explore 💨</strong>
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link
+                className={`nav-link mr-3 ${type === "hospitals" ? "active" : ""}`}
+                to="/hospitaldetails" // Add your path here
+              >
+                Hospitals
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                className={`nav-link mr-3 ${type === "doctors" ? "active" : ""}`}
+                to="/hospitals" // Add your path here
+              >
+                Doctors
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                className={`nav-link mr-3 ${type === "medical-centers" ? "active" : ""}`}
+                to="/medicalCenters" // Add your path here
+              >
+                Medical Centers
+              </Link>
+            </li>
+          </ul>
+
+          <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button className="ourbtn p-2" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </nav>
+
       <div className="max-w-[75rem] mx-auto py-5">
         <h2 className="text-center mb-5 text-4xl text-da font-semibold mt-5 capitalize">
-          Available {type}
+          Available Doctors
         </h2>
         <div className="row sm:p-3">
           {data?.map((doctor, index) => (
-            <div key={index} className=" col-lg-4 col-md-6 col-12 mb-4">
+            <div key={doctor._id} className="col-lg-4 col-md-6 col-12 mb-4">
               <div className="card text-center doctor-card">
                 <img
-                  src={hero2}
+                  src={hero2} // Use doctor's image or default avatar
                   className="card-img-top doctor-image"
                   alt={doctor.name}
                 />
@@ -79,9 +131,7 @@ const HospitalDetails = () => {
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
                       <button
-                        className={`nav-link ${
-                          activeTabs[index] === "details" ? "active" : ""
-                        }`}
+                        className={`nav-link ${activeTabs[index] === "details" ? "active" : ""}`}
                         onClick={() => handleTabClick(index, "details")}
                       >
                         Details
@@ -89,9 +139,7 @@ const HospitalDetails = () => {
                     </li>
                     <li className="nav-item">
                       <button
-                        className={`nav-link ${
-                          activeTabs[index] === "contact" ? "active" : ""
-                        }`}
+                        className={`nav-link ${activeTabs[index] === "contact" ? "active" : ""}`}
                         onClick={() => handleTabClick(index, "contact")}
                       >
                         Contact
@@ -99,9 +147,7 @@ const HospitalDetails = () => {
                     </li>
                     <li className="nav-item">
                       <button
-                        className={`nav-link ${
-                          activeTabs[index] === "location" ? "active" : ""
-                        }`}
+                        className={`nav-link ${activeTabs[index] === "location" ? "active" : ""}`}
                         onClick={() => handleTabClick(index, "location")}
                       >
                         Location
@@ -109,9 +155,7 @@ const HospitalDetails = () => {
                     </li>
                     <li className="nav-item">
                       <button
-                        className={`nav-link ${
-                          activeTabs[index] === "booking" ? "active" : ""
-                        }`}
+                        className={`nav-link ${activeTabs[index] === "booking" ? "active" : ""}`}
                         onClick={() => handleTabClick(index, "booking")}
                       >
                         Book
@@ -122,17 +166,18 @@ const HospitalDetails = () => {
                 <div className="card-body">
                   {activeTabs[index] === "details" && (
                     <p className="card-text">
-                      <strong>Specialties:</strong> {doctor.specialties}
+                      <strong>Specialties:</strong> {doctor.services}
                     </p>
                   )}
                   {activeTabs[index] === "contact" && (
                     <p className="card-text">
-                      <strong>Address:</strong> {doctor.address}
+                      <strong>Email:</strong> {doctor.email}
                     </p>
                   )}
                   {activeTabs[index] === "location" && (
                     <p className="card-text">
-                      <strong>City/Area:</strong> {doctor.cityArea}
+                      <strong>Address:</strong> {doctor.address}<br />
+                      <strong>City/Area:</strong> {doctor.city}
                     </p>
                   )}
                   {activeTabs[index] === "booking" && (

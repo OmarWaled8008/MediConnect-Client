@@ -28,54 +28,58 @@ import { Provider } from "react-redux";
 import RegisterLS from "./pages/registerLS/RegisterLS";
 // import ChatBox from "./components/chatbox/ChatBox.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import medicalCenters from "./pages/hospitaldetails/medical-centers"
 
 // Create the router
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LayOut />,
-    children: [
-      { path: "", element: <HomePage /> },
-      { path: "home", element: <HomePage /> },
-      { path: "userprofile", element: <UserProfile /> },
-      { path: "patientreviews", element: <PatientReviews /> },
-      { path: "hospitallocator", element: <HospitalLocator /> },
-      {
-        path: "hospitaldetails",
-        element: <HospitalDetails />,
-      },
-      { path: "hospitals", element: <Hospitals /> },
-      { path: "appointmentbooking", element: <AppointmentBooking /> },
-      { path: "telemedicine", element: <Telemedicine /> },
-      { path: "support", element: <Support /> },
-      { path: "about", element: <AboutUs /> },
-      { path: "blog", element: <Blog /> },
-      { path: "services", element: <Services /> },
-      { path: "contact", element: <Contact /> },
-      { path: "privacy", element: <Privacy /> },
-      { path: "faq", element: <Faq /> },
-      { path: "guides", element: <Guides /> },
-      { path: "terms", element: <TermsOfService /> },
-      // { path: "chatbox", element: <ChatBox /> }, // Uncomment if needed
-    ],
-  },
-  {
-    path: "/register",
-    element: <RegisterLS />,
-  },
-  { path: "*", element: <Notfound /> },
+const router = createBrowserRouter([{
+        path: "/",
+        element: < LayOut / > ,
+        children: [
+            { path: "", element: < HomePage / > },
+            { path: "home", element: < HomePage / > },
+            { path: "userprofile", element: < UserProfile / > },
+            { path: "patientreviews", element: < PatientReviews / > },
+            { path: "hospitallocator", element: < HospitalLocator / > },
+            {
+                path: "hospitaldetails",
+                element: < HospitalDetails / > ,
+            },
+            { path: "hospitals", element: < Hospitals / > },
+            { path: "appointmentbooking", element: < AppointmentBooking / > },
+            { path: "telemedicine", element: < Telemedicine / > },
+            { path: "support", element: < Support / > },
+            { path: "about", element: < AboutUs / > },
+            { path: "blog", element: < Blog / > },
+            { path: "services", element: < Services / > },
+            { path: "contact", element: < Contact / > },
+            { path: "privacy", element: < Privacy / > },
+            { path: "faq", element: < Faq / > },
+            { path: "guides", element: < Guides / > },
+            { path: "terms", element: < TermsOfService / > },
+            // { path: "chatbox", element: <ChatBox /> }, // Uncomment if needed
+            { path: "medicalCenters", element: < medicalCenters / > }, // add this line to fetch medical centers data from API and display them in the hospital details page.
+        ],
+    },
+    {
+        path: "/register",
+        element: < RegisterLS / > ,
+    },
+    { path: "*", element: < Notfound / > },
 ]);
 
 const queryClient = new QueryClient();
 
 function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </QueryClientProvider>
-  );
+    return ( <
+        QueryClientProvider client = { queryClient } >
+        <
+        Provider store = { store } >
+        <
+        RouterProvider router = { router }
+        /> < /
+        Provider > <
+        /QueryClientProvider>
+    );
 }
 
 export default App;

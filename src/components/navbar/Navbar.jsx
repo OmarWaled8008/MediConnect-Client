@@ -8,20 +8,17 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  BellIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import navCSS from "./navbar.module.css";
-import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearToken } from "../../store/tokenslice";
 // import logo from "../../assets/logo.svg";
 const navigation = [
   { name: "Home", to: "/home" },
   { name: "Locator", to: "/hospitallocator" },
   { name: "Details", to: "/hospitaldetails" },
-  { name: "Booking", to: "/appointmentbooking" },
+  { name: "Blogs", to: "/blog" },
 ];
 
 // Utility function to conditionally apply classes
@@ -30,7 +27,8 @@ function classNames(...classes) {
 }
 export default function Navbar() {
   const token = useSelector((state) => state.auth.token); // Access the token from Redux
-  console.log(token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     window.addEventListener("scroll", navbarChangeBg);
     return () => {
@@ -40,19 +38,25 @@ export default function Navbar() {
 
   function navbarChangeBg() {
     const navBar = document.getElementById("navBar");
-    // console.log(window.scrollY);
     if (window.scrollY >= 80) {
       navBar.classList.replace("bg-transparent", "bg-white");
     } else {
       navBar.classList.replace("bg-white", "bg-transparent");
     }
   }
+
+  const handleLogout = () => {
+    // Clear token from Redux and localStorage
+    dispatch(clearToken());
+    // Redirect to login
+    navigate("/register");
+  };
   return (
     <>
       <Disclosure
         id="navBar"
         as="nav"
-        className={`${navCSS.cg} fixed top-0 left-0 w-full bg-transparent py-1 transition-all z-50`}
+        className={`${navCSS.cg} fixed top-0 left-0 w-full bg-transparent py-1 transition-all z-40`}
       >
         <div className="mx-auto max-w-[75rem] p-2 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between">
@@ -198,7 +202,10 @@ export default function Navbar() {
                       </NavLink>
                     </MenuItem>
                     <MenuItem>
-                      <button className="block w-full px-4 py-2 text-sm text-center hover:bg-pr hover:text-light transition">
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full px-4 py-2 text-sm text-center hover:bg-pr hover:text-light transition"
+                      >
                         Sign out
                       </button>
                     </MenuItem>

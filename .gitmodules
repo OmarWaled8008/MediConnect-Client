@@ -1,0 +1,3 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/OmarWaled8008/MediConnect-Server.git
