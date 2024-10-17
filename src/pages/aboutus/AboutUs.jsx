@@ -57,7 +57,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-10 relative bg-gradient-to-b from-blue-100 to-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center py-10 relative">
       {/* Background Image */}
       <div className="absolute top-0 left-0 w-full h-64 overflow-hidden">
         <img src={pic} alt="Background Design" className="w-full object-cover h-full" />

@@ -9,7 +9,7 @@ function Privacy() {
           src={pic}
           alt="Background Design"
           className="w-full object-cover h-64"
-        />
+        /> 
 
         <div className="absolute inset-0 flex flex-col items-center justify-center text-da mt-2">
           <h1 className="text-5xl font-bold">Privacy Policy</h1>

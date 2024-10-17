@@ -1,6 +1,4 @@
-Overall card styling
-
-.card {
+Overall card styling .card {
   border: 1px solid #ddd;
   border-color: var(--primary);
   border-radius: 8px;
@@ -15,7 +13,6 @@ Overall card styling
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
 
 .card-header {
   background-color: #f8f9fa;
@@ -41,7 +38,6 @@ Overall card styling
   border-color: #007bff;
 }
 
-
 .card-body {
   padding: 1.5rem;
   display: flex;
@@ -60,7 +56,6 @@ Overall card styling
   margin-bottom: 0.5rem;
 }
 
-
 .card-img-top {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -68,12 +63,10 @@ Overall card styling
   object-fit: cover;
 }
 
-
 .rating {
   color: #ffd700;
   font-size: 1.5rem;
 }
-
 
 .navbar-nav {
   display: flex;
@@ -89,20 +82,17 @@ Overall card styling
   transition: color 0.3s ease;
 }
 
-
 .nav-link {
   color: #274760;
   transition: color 0.3s ease, background-color 0.3s ease;
   padding: 10px 15px;
 }
 
-
 .nav-link.active {
-  color: #fff;
   background-color: #317bc4;
   border-radius: 10px;
+  color: white;
 }
-
 
 .nav-link:hover {
   color: #fff;
@@ -110,18 +100,15 @@ Overall card styling
   border-radius: 10px;
 }
 
-
 .dropdown-menu {
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
 }
 
-
 .dropdown-item:hover {
   background-color: #317bc4;
   color: #fff;
 }
-
 
 .btn-primary {
   background-color: #007bff;

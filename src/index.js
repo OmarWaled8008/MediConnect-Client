@@ -21,10 +21,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render( <
-    GoogleOAuthProvider clientId = "YOUR_GOOGLE_CLIENT_ID" >
-    <
-    App / >
-    <
-    /GoogleOAuthProvider>
+root.render(
+  <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+    <App />
+  </GoogleOAuthProvider>
 );

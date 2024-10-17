@@ -3,7 +3,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import "./Guides.css";
 import pic from "../../assets/circlescatterhaikei.svg";
 
-const Guides = () => {
+const Guides = () => {      
   const guideData = [
     {
       title: "How to Choose the Right Hospital",

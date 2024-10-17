@@ -1,105 +1,135 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import pic from "../../assets/circlescatterhaikei.svg";
 
 export default function UserProfile() {
-  const [userData, setUserData] = useState(null);
+  // Get the token from Redux store
+  const token = useSelector((state) => state.auth.token);
 
-  useEffect(() => {
-    // Fetch user data from localStorage
-    const storedData = localStorage.getItem("userData");
-    if (storedData) {
-      setUserData(JSON.parse(storedData));
-    }
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["profileData"],
+    queryFn: getProfile,
+  });
 
-  if (!userData) {
+  async function getProfile() {
+    return await axios.get("http://localhost:8000/api/patients/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  if (isLoading) {
     return (
-      <div className="h-[50vh] bg-dark text-light flex justify-center items-center font-bold text-3xl">
+      <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">
         Loading...
       </div>
     );
   }
 
+  if (error) {
+    return (
+      <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">
+        Error loading profile
+      </div>
+    );
+  }
+
+  const userData = data?.data?.patient || {};
+
+  // Placeholder image in case no patient image is provided
+  const profileImage =
+    userData.profileImage || "https://via.placeholder.com/150";
+
   return (
-    <div className="h-[100vh] bg-dark text-light p-5">
-      <h2 className="text-center mb-4 text-3xl">User Profile</h2>
-      <div className="container">
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Name:</strong> {userData.name}
-          </div>
-          <div className="col-md-6">
-            <strong>Email:</strong> {userData.email}
-          </div>
+    <div className="min-h-screen flex items-center justify-center py-10 relative">
+      <div className="absolute top-0 left-0 w-full h-auto justify-center">
+        <img
+          src={pic}
+          alt="Background Design"
+          className="w-full object-cover h-64"
+        />
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-da mt-2">
+          <h1 className="text-5xl font-bold">Profile</h1>
+          <p className="text-lg mt-1">We are here to assist you.</p>
         </div>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Birthdate:</strong> {userData.birthdate}
-          </div>
-          <div className="col-md-6">
-            <strong>Gender:</strong> {userData.gender}
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Blood Type:</strong> {userData.bloodType}
-          </div>
-          <div className="col-md-6">
-            <strong>Medical History:</strong> {userData.medicalHistory}
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Allergies:</strong> {userData.allergies}
-          </div>
-          <div className="col-md-6">
-            <strong>Current Medications:</strong> {userData.currentMedications}
-          </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Prior Surgeries:</strong> {userData.priorSurgeries}
-          </div>
-          <div className="col-md-6">
-            <strong>Health Insurance:</strong>{" "}
-            {userData.hasInsurance ? "Yes" : "No"}
-          </div>
-        </div>
-        {userData.hasInsurance && (
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <strong>Insurance Provider:</strong> {userData.insuranceProvider}
-            </div>
-            <div className="col-md-6">
-              {userData.insurancePhoto && (
-                <div>
-                  <strong>Insurance Card:</strong>
-                  <img
-                    src={URL.createObjectURL(userData.insurancePhoto)}
-                    alt="Insurance Card"
-                    className="img-thumbnail mt-2"
-                    style={{ maxWidth: "200px" }}
-                  />
-                </div>
-              )}
+      </div>
+
+      <div className="w-full max-w-4xl bg-white p-10 rounded-lg shadow-md z-10 relative mt-40">
+        {/* Profile Header Section */}
+        <div className="flex items-center mb-4">
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="w-24 h-24 rounded-full object-cover mr-4"
+          />
+          <div className="flex-1">
+            <h2 className="text-3xl font-bold text-red-500">
+              {userData.name || "N/A"}
+            </h2>
+            <div className="flex space-x-2 mt-1">
+              <a href="#" className="text-blue-600">
+                <i className="fab fa-facebook"></i>
+              </a>
+              <a href="#" className="text-blue-400">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="#" className="text-blue-500">
+                <i className="fab fa-linkedin"></i>
+              </a>
             </div>
           </div>
-        )}
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <strong>Promo Code:</strong> {userData.promoCode}
+          <div>
+            <button className="text-red-500">
+              <i className="fas fa-pencil-alt"></i>
+            </button>
           </div>
-          <div className="col-md-6">
-            {userData.patientPhoto && (
-              <div>
-                <strong>Patient Photo:</strong>
-                <img
-                  src={URL.createObjectURL(userData.patientPhoto)}
-                  alt="Patient"
-                  className="img-thumbnail mt-2"
-                  style={{ maxWidth: "200px" }}
-                />
-              </div>
-            )}
+        </div>
+
+        {/* Basic Info */}
+        <div className="grid grid-cols-2 gap-4 text-lg">
+          <div>
+            <strong>Date Of Birth:</strong>{" "}
+            {new Date(userData.createdAt).toLocaleDateString() || "N/A"}
+          </div>
+          <div>
+            <strong>Gender:</strong> {userData.gender || "N/A"}
+          </div>
+          <div>
+            <strong>Email:</strong> {userData.email || "N/A"}
+          </div>
+          <div>
+            <strong>Phone:</strong> {userData.phone || "N/A"}
+          </div>
+          <div>
+            <strong>Address:</strong> {userData.address || "N/A"}
+          </div>
+          <div>
+            <strong>Blood Group:</strong> {userData.blood_type || "N/A"}
+          </div>
+        </div>
+
+        {/* Medical Info */}
+        <h3 className="text-2xl font-semibold mt-6">Medical Information</h3>
+        <div className="mt-4">
+          <div className="mb-2">
+            <strong>Medical History:</strong>
+            <p>
+              {userData.medical_history && userData.medical_history.length > 0
+                ? userData.medical_history.join(", ")
+                : "No medical history available"}
+            </p>
+          </div>
+          <div className="mb-2">
+            <strong>Allergies:</strong>
+            <p>
+              {userData.allergies && userData.allergies.length > 0
+                ? userData.allergies.join(", ")
+                : "No allergies"}
+            </p>
           </div>
         </div>
       </div>

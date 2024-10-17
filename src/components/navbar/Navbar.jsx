@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -10,13 +10,12 @@ import {
 } from "@headlessui/react";
 import {
   Bars3Icon,
-  BellIcon, 
-  MagnifyingGlassIcon,
+  BellIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import navCSS from "./navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
-import { TextField } from "@mui/material";
+import { useSelector } from "react-redux";
 // import logo from "../../assets/logo.svg";
 const navigation = [
   { name: "Home", to: "/home" },
@@ -30,8 +29,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" "); // Filter out falsy values
 }
 export default function Navbar() {
-  const [token, setToken] = useState(null);
-
+  const token = useSelector((state) => state.auth.token); // Access the token from Redux
+  console.log(token);
   useEffect(() => {
     window.addEventListener("scroll", navbarChangeBg);
     return () => {
@@ -109,8 +108,7 @@ export default function Navbar() {
 
             {token ? (
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                search dropdown
-                <Menu as="div" className="relative ml-3">
+                {/* <Menu as="div" className="relative ml-3">
                   <div>
                     <MenuButton
                       type="button"
@@ -136,8 +134,7 @@ export default function Navbar() {
                       size="small"
                     />
                   </MenuItems>
-                </Menu>
-                notifications dropdown
+                </Menu> */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <MenuButton
@@ -158,7 +155,6 @@ export default function Navbar() {
                     </div>
                   </MenuItems>
                 </Menu>
-                Profile dropdown
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
@@ -212,16 +208,10 @@ export default function Navbar() {
             ) : (
               <div className=" flex justify-between text-[16px] items-center space-x-2">
                 <Link
-                  to="/login"
+                  to="/register"
                   className="rounded-md px-3 py-2 text-[17px] font-medium ourbtn "
                 >
-                  Login
-                </Link>
-                <Link
-                  to="/signup"
-                  className="rounded-md px-3 py-2 text-[17px] font-medium ourbtn2 "
-                >
-                  Sign Up
+                  Register
                 </Link>
               </div>
             )}
