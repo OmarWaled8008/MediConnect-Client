@@ -12,7 +12,6 @@ import PatientReviews from "./pages/patientreviews/PatientReviews";
 import Support from "./pages/support/Support";
 import HospitalLocator from "./pages/hospitallocator/HospitalLocator";
 import HospitalDetails from "./pages/hospitaldetails/HospitalDetails";
-import Hospitals from "./pages/hospitaldetails/Hospitals";
 import AppointmentBooking from "./pages/appointmentbooking/AppointmentBooking";
 import Telemedicine from "./pages/telemedicine/Telemedicine";
 import Blog from "./pages/blog/Blog";
@@ -28,6 +27,7 @@ import { Provider } from "react-redux";
 import RegisterLS from "./pages/registerLS/RegisterLS";
 // import ChatBox from "./components/chatbox/ChatBox.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ProtectedRoute from "./components/protactor/ProtectedRoute";
 
 // Create the router
 const router = createBrowserRouter([
@@ -37,15 +37,28 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "home", element: <HomePage /> },
-      { path: "userprofile", element: <UserProfile /> },
-      { path: "patientreviews", element: <PatientReviews /> },
+      {
+        path: "userprofile",
+        element: (
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "patientreviews",
+        element: (
+          <ProtectedRoute>
+            <PatientReviews />{" "}
+          </ProtectedRoute>
+        ),
+      },
       { path: "hospitallocator", element: <HospitalLocator /> },
       {
         path: "hospitaldetails",
         element: <HospitalDetails />,
       },
-      { path: "hospitals", element: <Hospitals /> },
-      { path: "appointmentbooking", element: <AppointmentBooking /> },
+      { path: "appointmentbooking/:id", element: <AppointmentBooking /> },
       { path: "telemedicine", element: <Telemedicine /> },
       { path: "support", element: <Support /> },
       { path: "about", element: <AboutUs /> },

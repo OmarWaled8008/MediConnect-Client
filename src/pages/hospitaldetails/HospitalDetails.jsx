@@ -7,6 +7,7 @@ import hero2 from "../../assets/avatarm.svg";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { BallTriangle } from "react-loader-spinner";
 
 // Sample Doctor Data (replace this with your actual data source)
 const doctorData = [
@@ -39,23 +40,35 @@ export default function HospitalDetails() {
     enabled: !!type, // Ensure type is available before making the request
   });
 
-  console.log(data);
   const handleTabClick = (index, tab) => {
     const newActiveTabs = [...activeTabs]; // Create a copy of the active tabs array
     newActiveTabs[index] = tab; // Update the active tab for the specific doctor
     setActiveTabs(newActiveTabs); // Set the new active tabs array
   };
 
-  const handleBookingClick = () => {
-    navigate("/appointmentbooking"); // Navigate to the booking page
-  };
+  // const handleBookingClick = () => {
+  //   navigate("/appointmentbooking"); // Navigate to the booking page
+  // };
 
   const handleTypeChange = (newType) => {
     setType(newType); // Change type when the user clicks a different nav button
   };
 
   // Render loading or error states for API call
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return (
+    <div className="absolute top-0 left-0 w-full h-[100vh] bg-white z-50 flex justify-center items-center">
+      <BallTriangle
+        height={100}
+        width={100}
+        radius={5}
+        color="#317bc4"
+        ariaLabel="ball-triangle-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </div>
+  );
   if (error) return <div>Error fetching data...</div>;
 
   return (
@@ -216,7 +229,9 @@ export default function HospitalDetails() {
                   {activeTabs[index] === "booking" && (
                     <button
                       className="btn btn-primary"
-                      onClick={handleBookingClick}
+                      onClick={function () {
+                        navigate(`/appointmentbooking/${doctor._id}`);
+                      }}
                     >
                       Book Now
                     </button>

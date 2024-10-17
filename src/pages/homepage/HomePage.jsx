@@ -193,7 +193,7 @@ export default function HomePage() {
         <div className="max-w-[75rem] mx-auto p-5 row">
           <div className="mb-5 col-md-5 col-12 p-0">
             <div className="relative">
-              <i class="fa-solid fa-shield-virus bg-white text-gr block absolute top-[-6%] right-[-5%]  text-5xl p-2 rounded-full"></i>
+              <i class="fa-solid fa-shield-virus bg-white text-pr shadow-md block absolute top-[-6%] right-[-5%]  text-5xl p-2 rounded-full"></i>
               <img
                 src={require("../../assets/home-m2.jpg")}
                 alt="About Us"

@@ -31,9 +31,6 @@ export default function MainSecComp({ hero, heading }) {
               <Link to="/hospitallocator" className="ourbtn text-light">
                 Find a Hospital
               </Link>
-              <Link to="/appointmentbooking" className="ourbtn2">
-                Book an Appointment
-              </Link>
             </div>
           </div>
           <div className="flex flex-col justify-center h-full">

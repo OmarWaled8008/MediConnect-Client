@@ -12,6 +12,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { BallTriangle } from "react-loader-spinner";
 
 const initialHospitals = [
   {
@@ -154,8 +155,6 @@ const HospitalLocator = () => {
     return await axios.get("http://localhost:8000/api/data/hospitals");
   }
 
-  console.log(data?.data);
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -170,10 +169,21 @@ const HospitalLocator = () => {
     );
   }, []);
 
-  
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading)
+    return (
+      <div className="absolute top-0 left-0 w-full h-[100vh] bg-white z-50 flex justify-center items-center">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#317bc4"
+          ariaLabel="ball-triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
   const calculateDistance = (lat1, lng1, lat2, lng2) => {
     const toRad = (x) => (x * Math.PI) / 180;
     const R = 6371; // Radius of the Earth in km
