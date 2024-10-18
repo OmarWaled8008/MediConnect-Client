@@ -7,7 +7,7 @@ import hero2 from "../../assets/mm.jpg";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+import { BallTriangle } from "react-loader-spinner";
 export default function MedicalCenters() {
   const navigate = useNavigate();
   const [type, setType] = useState("medical-centers");
@@ -42,8 +42,28 @@ export default function MedicalCenters() {
   };
 
   // Render loading or error states for API call
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data...</div>;
+  if (isLoading)
+    return (
+      <div className="absolute top-0 left-0 w-full h-[100vh] bg-white z-50 flex justify-center items-center">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#317bc4"
+          ariaLabel="ball-triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
+ if (error) {
+   return (
+     <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">
+       Error loading profile
+     </div>
+   );
+ }
 
   return (
     <>

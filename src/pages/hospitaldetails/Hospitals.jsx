@@ -7,6 +7,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import hero1 from "../../assets/docs.png";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
+import { BallTriangle } from "react-loader-spinner";
 const HospitalDetails = () => {
   const { type } = useParams();
   const navigate = useNavigate();
@@ -33,13 +34,35 @@ const HospitalDetails = () => {
   };
 
  
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error fetching data: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error fetching data: {error.message}</div>;
+  // }
+  if (isLoading)
+    return (
+      <div className="absolute top-0 left-0 w-full h-[100vh] bg-white z-50 flex justify-center items-center">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#317bc4"
+          ariaLabel="ball-triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    );
+ if (error) {
+   return (
+     <div className="h-[50vh] bg-gray-900 text-white flex justify-center items-center font-bold text-3xl">
+       Error loading profile
+     </div>
+   );
+ }
 
   return (
     <>
