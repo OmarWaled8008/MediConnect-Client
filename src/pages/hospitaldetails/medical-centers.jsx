@@ -3,15 +3,14 @@ import "./hospitaldetails.css"; // Ensure this path is correct
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate, Link } from "react-router-dom";
 import hero1 from "../../assets/docs.png";
-import hero2 from "../../assets/hh.jpg"; // Placeholder for hospital image
+import hero2 from "../../assets/mm.jpg";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export default function HospitalDetails() {
+export default function MedicalCenters() {
   const navigate = useNavigate();
-  const [activeTabs, setActiveTabs] = useState([]); // Active tabs for each hospital
-  const [type, setType] = useState("hospitals"); // State to control type, e.g., hospitals, doctors
+  const [type, setType] = useState("medical-centers");
   const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch data using React Query
@@ -19,23 +18,27 @@ export default function HospitalDetails() {
     queryKey: ["data", type],
     queryFn: () =>
       axios
-        .get(`http://localhost:8000/api/data/hospitals`)
+        .get(`http://localhost:8000/api/data/medical-centers`)
         .then((res) => res.data),
     enabled: !!type, // Ensure type is available before making the request
   });
 
-  console.log(data);
+  // Initialize activeTabs to have all tabs default to 'details'
+  const [activeTabs, setActiveTabs] = useState(
+    data?.map(() => "details") || []
+  );
 
   const handleTabClick = (index, tab) => {
-    const newActiveTabs = [...activeTabs]; // Create a copy of the active tabs array
-    newActiveTabs[index] = tab; // Update the active tab for the specific hospital
-    setActiveTabs(newActiveTabs); // Set the new active tabs array
+    setActiveTabs((prevTabs) => ({
+      ...prevTabs,
+      [index]: tab,
+    }));
   };
 
-  
+ 
 
   const handleTypeChange = (newType) => {
-    setType(newType); // Change type when the user clicks a different nav button
+    setType(newType);
   };
 
   // Render loading or error states for API call
@@ -46,11 +49,11 @@ export default function HospitalDetails() {
     <>
       <MainSecComp
         hero={hero1}
-        heading={`<p>Discover Hospitals,</p>
-              <p>Book Instantly.</p>`}
+        heading={`<p>Discover Medical Centers,</p><p>Book Instantly.</p>`}
       />
 
-      <nav className="navbar navbar-expand-lg max-w-[75rem] mx-auto py-3">
+     
+<nav className="navbar navbar-expand-lg max-w-[75rem] mx-auto py-3">
         <div className="container-fluid">
           <Link className="navbar-brand text-dark" to="#">
             <strong>Explore 💨</strong>
@@ -68,26 +71,34 @@ export default function HospitalDetails() {
           </button>
 
           <ul className="navbar-nav ms-auto">
+            {/* Hospitals Navigation Button */}
             <li className="nav-item">
               <Link
                 className={`nav-link mr-3 ${type === "hospitals" ? "active" : ""}`}
-                to="/hospitaldetails"
+                // onClick={() => handleTypeChange("hospitals")}
+                to="/hospitaldetails" // Add your path here
               >
                 Hospitals
               </Link>
             </li>
+
+            {/* Doctors Navigation Button */}
             <li className="nav-item">
               <Link
                 className={`nav-link mr-3 ${type === "doctors" ? "active" : ""}`}
-                to="/hospitals"
+                // onClick={() => handleTypeChange("doctors")}
+                to="/hospitals" // Add your path here
               >
                 Doctors
               </Link>
             </li>
+
+            {/* Add more nav items as needed */}
             <li className="nav-item">
               <Link
                 className={`nav-link mr-3 ${type === "medical-centers" ? "active" : ""}`}
-                to="/medicalCenters"
+                // onClick={() => handleTypeChange("medical-centers")}
+                to="/medicalCenters" // Add your path here
               >
                 Medical Centers
               </Link>
@@ -113,19 +124,19 @@ export default function HospitalDetails() {
 
       <div className="max-w-[75rem] mx-auto py-5">
         <h2 className="text-center mb-5 text-4xl text-da font-semibold mt-5">
-          Available {type.charAt(0).toUpperCase() + type.slice(1)}{" "}
+          Available {type.charAt(0).toUpperCase() + type.slice(1)}
         </h2>
         <div className="row sm:p-3">
-          {data.map((hospital, index) => (
-            <div key={hospital._id} className="col-lg-4 col-md-6 col-12 mb-4">
+          {data?.map((center, index) => (
+            <div key={index} className="col-lg-4 col-md-6 col-12 mb-4">
               <div className="card text-center doctor-card">
                 <img
-                  src={hero2} // Fallback to hero2 if photos are not available
+                  src={hero2}
                   className="card-img-top doctor-image"
-                  alt={hospital.name}
+                  alt={center.name}
                 />
                 <div className="card-header">
-                  <h5 className="card-title py-3 text-da font-medium">{hospital.name}</h5>
+                  <h5 className="card-title py-3 text-da font-medium">{center.name}</h5>
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
                       <button
@@ -164,29 +175,29 @@ export default function HospitalDetails() {
                 <div className="card-body">
                   {activeTabs[index] === "details" && (
                     <p className="card-text">
-                      <strong>Description: All specializations are available</strong> <br />
-                      <strong>Address:</strong> {hospital.address}<br />
-                      <strong>City:</strong> {hospital.city}
+                      <strong>Location:</strong> {center.city}<br />
+                      <strong>Address:</strong> {center.address || "N/A"}<br />
+                      <strong>Detail Page:</strong> <a href={center.detailPageUrl} target="_blank" rel="noopener noreferrer">View More</a>
                     </p>
                   )}
                   {activeTabs[index] === "services" && (
                     <p className="card-text">
-                      <strong>Services:</strong> {hospital.hospital_info || "N/A"}
+                      <strong>Services:</strong> {center.services || "N/A"}
                     </p>
                   )}
                   {activeTabs[index] === "contact" && (
                     <p className="card-text">
-                      <strong>Email:</strong> {hospital.email}<br />
-                      <strong>Telephone:</strong> {hospital.telephone}<br />
-                      <strong>Contact Info:</strong> {hospital.contactInfo}
+                      <strong>Email:</strong> {center.email || "N/A"}<br />
+                      <strong>Telephone:</strong> {center.telephone || "N/A"}<br />
+                      <strong>Contact Info:</strong> {center.contactInfo || "N/A"}
                     </p>
                   )}
                   {activeTabs[index] === "booking" && (
                     <button
                       className="btn btn-primary"
                       onClick={function () {
-                        navigate(`/appointmentbooking/${hospital._id}`);
-                      }} // Pass hospital ID to the booking handler
+                        navigate(`/appointmentbooking/${center._id}`);
+                      }} //
                     >
                       Book Now
                     </button>
