@@ -28,7 +28,7 @@ import { Provider } from "react-redux";
 import RegisterLS from "./pages/registerLS/RegisterLS";
 // import ChatBox from "./components/chatbox/ChatBox.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import medicalCenters from "./pages/hospitaldetails/medical-centers"
+import MedicalCenters from "./pages/hospitaldetails/medical-centers";
 
 // Create the router
 const router = createBrowserRouter([{
@@ -57,7 +57,7 @@ const router = createBrowserRouter([{
             { path: "guides", element: < Guides / > },
             { path: "terms", element: < TermsOfService / > },
             // { path: "chatbox", element: <ChatBox /> }, // Uncomment if needed
-            { path: "medicalCenters", element: < medicalCenters / > }, // add this line to fetch medical centers data from API and display them in the hospital details page.
+            { path: "medicalCenters", element: < MedicalCenters / > } // add this line to fetch medical centers data from API and display them in the hospital details page.
         ],
     },
     {
