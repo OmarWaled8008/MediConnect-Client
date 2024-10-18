@@ -32,10 +32,7 @@ export default function HospitalDetails() {
     setActiveTabs(newActiveTabs); // Set the new active tabs array
   };
 
-  const handleBookingClick = (id) => {
-    // navigate(`/appointmentbooking/${id}`); // Navigate to the booking page with the hospital ID
-     navigate(`/appointmentbooking`);
-  };
+  
 
   const handleTypeChange = (newType) => {
     setType(newType); // Change type when the user clicks a different nav button
@@ -187,7 +184,9 @@ export default function HospitalDetails() {
                   {activeTabs[index] === "booking" && (
                     <button
                       className="btn btn-primary"
-                      onClick={() => handleBookingClick(hospital._id)} // Pass hospital ID to the booking handler
+                      onClick={function () {
+                        navigate(`/appointmentbooking/${hospital._id}`);
+                      }} // Pass hospital ID to the booking handler
                     >
                       Book Now
                     </button>

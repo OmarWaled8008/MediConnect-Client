@@ -35,9 +35,7 @@ export default function MedicalCenters() {
     }));
   };
 
-  const handleBookingClick = () => {
-    navigate("/appointmentbooking");
-  };
+ 
 
   const handleTypeChange = (newType) => {
     setType(newType);
@@ -197,7 +195,9 @@ export default function MedicalCenters() {
                   {activeTabs[index] === "booking" && (
                     <button
                       className="btn btn-primary"
-                      onClick={handleBookingClick}
+                      onClick={function () {
+                        navigate(`/appointmentbooking/${center._id}`);
+                      }} //
                     >
                       Book Now
                     </button>

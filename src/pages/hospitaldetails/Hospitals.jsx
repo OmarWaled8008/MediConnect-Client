@@ -32,10 +32,7 @@ const HospitalDetails = () => {
     }));
   };
 
-  const handleBookingClick = () => {
-    navigate("/appointmentbooking"); // Navigate to booking page
-  };
-
+ 
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -209,7 +206,9 @@ const HospitalDetails = () => {
                   {activeTabs[index] === "booking" && (
                     <button
                       className="btn btn-primary"
-                      onClick={handleBookingClick}
+                      onClick={function () {
+                        navigate(`/appointmentbooking/${doctor._id}`);
+                      }} 
                     >
                       Book Now
                     </button>

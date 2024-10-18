@@ -3,7 +3,7 @@ import hero1 from "../../assets/home-mm.png";
 import MainSecComp from "../../components/mainSecComp/MainSecComp";
 import "./appointmentbooking.css";
 import { useSelector } from "react-redux";
-import {jwtDecode} from "jwt-decode"; // Fixed import to avoid destructuring
+import { jwtDecode } from "jwt-decode"; // Fixed import to avoid destructuring
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -82,6 +82,7 @@ export default function AppointmentBooking() {
               .then((response) => {
                 console.log("Appointment booked successfully!", response.data);
                 setSubmitting(false);
+                // Optionally, you can navigate to a different page or display a success message
               })
               .catch((error) => {
                 console.error(

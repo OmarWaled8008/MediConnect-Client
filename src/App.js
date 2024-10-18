@@ -45,7 +45,8 @@ const router = createBrowserRouter([{
                 element: < HospitalDetails / > ,
             },
             { path: "hospitals", element: < Hospitals / > },
-            { path: "appointmentbooking", element: < AppointmentBooking / > },
+            // Update this line to include the ID parameter for AppointmentBooking
+            { path: "appointmentbooking/:id", element: < AppointmentBooking / > },
             { path: "telemedicine", element: < Telemedicine / > },
             { path: "support", element: < Support / > },
             { path: "about", element: < AboutUs / > },
@@ -57,7 +58,7 @@ const router = createBrowserRouter([{
             { path: "guides", element: < Guides / > },
             { path: "terms", element: < TermsOfService / > },
             // { path: "chatbox", element: <ChatBox /> }, // Uncomment if needed
-            { path: "medicalCenters", element: < MedicalCenters / > } // add this line to fetch medical centers data from API and display them in the hospital details page.
+            { path: "medicalCenters", element: < MedicalCenters / > } // Add this line to fetch medical centers data from API and display them in the hospital details page.
         ],
     },
     {
@@ -76,8 +77,8 @@ function App() {
         Provider store = { store } >
         <
         RouterProvider router = { router }
-        /> < /
-        Provider > <
+        /> <
+        /Provider> <
         /QueryClientProvider>
     );
 }

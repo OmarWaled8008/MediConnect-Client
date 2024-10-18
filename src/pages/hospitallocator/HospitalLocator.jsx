@@ -115,9 +115,7 @@ const HospitalLocator = () => {
     className: "red-marker",
   });
 
-  const handleBookingClick = (hospital) => {
-    navigate("/appointmentbooking", { state: { hospital } });
-  };
+ 
 
   const toggleTab = (index, tab) => {
     setActiveTabs((prev) => ({
@@ -190,7 +188,7 @@ const HospitalLocator = () => {
                       <Link
                         to="#"
                         className="btn btn-primary"
-                        onClick={() => handleBookingClick(hospital)}
+                        onClick={() => navigate(`/appointmentbooking/${hospital._id}`, { state: { hospital } })}
                       >
                         Book Now
                       </Link>
@@ -242,7 +240,7 @@ const HospitalLocator = () => {
                       <Link
                         to="#"
                         className="btn btn-primary"
-                        onClick={() => handleBookingClick(hospital)}
+                        onClick={() => navigate(`/appointmentbooking/${hospital._id}`, { state: { hospital } })}
                       >
                         Book Now
                       </Link>
